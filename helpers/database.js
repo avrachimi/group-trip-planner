@@ -1,26 +1,25 @@
-require('dotenv').config()
-const Sequelize = require("sequelize");
-const userModel = require('../models/user');
+const db = require('../models');
 
-const sequelize = new Sequelize(
- process.env.DB_NAME,
- process.env.DB_USERNAME,
- process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT
-  }
-);
+function initialize() {
+    // Setup relationships
+    // FIXME: Fix OnDelete and OnUpdate options
+    db['user'].hasMany(db['destination'], { foreignKey: 'user_id'});
+    db['destination'].belongsTo(db['user'], { foreignKey: 'user_id'});
 
-// Define DB Models
-const user = userModel(sequelize, Sequelize.DataTypes);
+    db['user'].hasMany(db['vote'], { foreignKey: 'user_id', onDelete: 'CASCADE'});
+    db['vote'].belongsTo(db['user'], { foreignKey: 'user_id'});
 
-function sync(force=false) {
-    sequelize.sync({force: force})
-    .then(res => res)
-    .then(json => {
-        console.log('Models synced with database');
-    });
+    db['destination'].hasMany(db['vote'], { foreignKey: 'destination_id', onDelete: 'CASCADE'});
+    db['vote'].belongsTo(db['destination'], { foreignKey: 'destination_id'});
+}
+
+function sync(force = false) {
+    db.sequelize.sync({ force: force })
+        .then(res => res)
+        .then(() => {
+            console.log('Models synced with database');
+        })
+        .catch(err => console.log(err));
 }
 
 function addUser(fname, lname, email, hashedPassword) {
@@ -31,10 +30,10 @@ function addUser(fname, lname, email, hashedPassword) {
         password: hashedPassword
     });
 
-    newUser.save().then(res => console.log(`User saved`));
+    newUser.save().then(() => console.log(`User saved`));
 }
 
 module.exports = {
-    sync,
-    addUser
+    initialize,
+    sync
 };

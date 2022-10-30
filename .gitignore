@@ -1,6 +1,7 @@
 *.env
 node_modules
 .DS_Store
+config
 
 # VS Code files for those working on multiple tools
 .vscode/*
