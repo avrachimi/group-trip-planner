@@ -3,13 +3,46 @@ const bcrypt = require('bcrypt');
 const User = db['user'];
 
 // GET /users
+// Auth: Admin
 const getAll = async (req, res, next) => {
     const users = await User.findAll();
     res.json(users);
 };
 
-// POST /users
-const createOne = async (req, res, next) => {
+// GET /login
+// Auth: None
+const getLogin = (req, res, next) => {
+    if (req.session.isAuth) res.redirect('/destinations');
+    res.render('login');
+};
+
+// POST /login
+// Auth: None
+const postLogin = async (req, res, next) => {
+    const user = await User.findOne({
+        where: {
+            email: req.body.email
+        }
+    });
+    if (!user) res.render('login'); // FIXME: modify frontend to receive error and display it
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) return res.render('login');
+
+    req.session.isAuth = true;
+    req.session.user_id = user.id;
+    res.redirect('/destinations'); // FIXME: .render('/');
+};
+
+// GET /register
+// Auth: None
+const getRegister = async (req, res, next) => {
+   res.render('register');
+};
+
+// POST /register
+// Auth: None
+const postRegister = async (req, res, next) => {
     // Hash password
     let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -19,15 +52,16 @@ const createOne = async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword
     }).then(json => {
-        res.json(json);
+        res.redirect('/login');
     }).catch(err => {
         console.log(err);
-        res.json({ message: "Something went wrong." });
+        res.redirect('/register');
     });
 };
 
-// GET /users/:id˝
-const getOne = async (req, res, next) => {
+// GET /account
+// Auth: User
+const getAccount = async (req, res, next) => {
     // TODO: Make sure that signed in user can only view their account, unless signed in user is admin
     const user = await User.findByPk(req.params.id);
 
@@ -35,8 +69,15 @@ const getOne = async (req, res, next) => {
     res.json({ message: "User not found" });
 };
 
-// PUT /users/:id
-const updateOne = async (req, res, next) => {
+// GET /account/edit
+// Auth: User
+const getAccountEdit = (req, res, next) => {
+    res.json({message:"get /account/edit"}); // FIXME:
+};
+
+// POST /account/edit
+// Auth: User
+const updateAccount = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update their account, unless signed in user is admin
     // Hash password
     let hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -52,7 +93,7 @@ const updateOne = async (req, res, next) => {
         }
     }).then(() => {
         console.log(`User ${req.body.email} has been updated succesfully`);
-        res.json({ message: `User ${req.body.email} has been updated succesfully` });
+        res.redirect('/account');
     }).catch(err => {
         console.log(err);
         res.json({ message: "Something went wrong with user update" });
@@ -78,8 +119,12 @@ const deleteOne = (req, res, next) => {
 
 module.exports = {
     getAll,
-    createOne,
-    getOne,
-    updateOne,
-    deleteOne
+    deleteOne,
+    getLogin,
+    postLogin,
+    getRegister,
+    postRegister,
+    getAccount,
+    getAccountEdit,
+    updateAccount
 };

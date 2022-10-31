@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Destination</title>
+</head>
+<body>
+    <form id="newDestinationForm" action="/destinations/new" method="POST">
+        <div class="container">
+            <label for="description"><b>Description</b></label>
+            <textarea style="width: 90%;" name="description" placeholder="Enter description here.." form="newDestinationForm" required></textarea>
+
+            <label for="country"><b>Country</b></label>
+            <input type="text" placeholder="Enter Country" name="country" required>
+
+            <label for="city"><b>City</b></label>
+            <input type="text" placeholder="Enter City" name="city" required>
+
+            <label for="budget"><b>Budget</b></label>
+            <input type="number" name="budget" min="0" required>
+            
+            <label for="nights_stay"><b>Stay (Nights)</b></label>
+            <input type="number" name="nights_stay" min="0" required>
+            
+            <button type="submit">Create Destination</button>
+        </div>
+    </form>
+</body>
+</html>

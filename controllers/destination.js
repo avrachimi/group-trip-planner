@@ -3,16 +3,24 @@ const Destination = db['destination'];
 const User = db['user'];
 
 // GET /destinations
+// Auth: User
 const getAll = async (req, res, next) => {
     const destinations = await Destination.findAll();
-    res.json(destinations);
+    res.render('destinations', { destinations : destinations});
 };
 
-// POST /destinations
-const createOne = async (req, res, next) => {
+// GET /destinations/new
+// Auth: User
+const getDestinationsNew = (req, res, next) => {
+    res.render('destination_create');
+};
+
+// POST /destinations/new
+// Auth: User
+const postDestinationsNew = async (req, res, next) => {
 
     //TODO: Check if user is authenticated and use the proper user_id
-    const user_id = 1;
+    const user_id = 2;
 
     const user = await User.findByPk(user_id);
     if (!user) res.json({ message: `User with id ${user_id} was not found. Destination will not be created` });
@@ -25,7 +33,7 @@ const createOne = async (req, res, next) => {
         nights_stay: req.body.nights_stay,
         user_id: user.id
     }).then(json => {
-        res.json(json);
+        res.redirect(`/destinations/${json.id}`);
     }).catch(err => {
         console.log(err);
         res.json({ message: "Something went wrong." });
@@ -33,17 +41,19 @@ const createOne = async (req, res, next) => {
 };
 
 // GET /destinations/:id
-const getOne = async (req, res, next) => {
+// Auth: User
+const getDestination = async (req, res, next) => {
     const destination = await Destination.findByPk(req.params.id);
 
-    if (destination) res.json(destination);
-    res.json({ message: "Destination not found" });
+    if (!destination) res.json({ message: "Destination not found" });
+    res.render('destination_view', { destination : destination });
 };
 
 // PUT /destinations/:id
-const updateOne = async (req, res, next) => {
+// Auth: User
+const updateDestination = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update destinations they created, unless signed in user is admin
-    
+
     Destination.update({
         description: req.body.description,
         country: req.body.country,
@@ -65,7 +75,8 @@ const updateOne = async (req, res, next) => {
 };
 
 // DELETE /destinations/:id
-const deleteOne = (req, res, next) => {
+// Auth: User
+const deleteDestination = (req, res, next) => {
     // TODO: Make sure that signed in user can only delete destinations they created, unless signed in user is admin
     Destination.destroy({
         where: {
@@ -83,8 +94,9 @@ const deleteOne = (req, res, next) => {
 
 module.exports = {
     getAll,
-    createOne,
-    getOne,
-    updateOne,
-    deleteOne
+    postDestinationsNew,
+    getDestination,
+    updateDestination,
+    deleteDestination,
+    getDestinationsNew
 };
