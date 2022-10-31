@@ -22,17 +22,6 @@ function sync(force = false) {
         .catch(err => console.log(err));
 }
 
-function addUser(fname, lname, email, hashedPassword) {
-    const newUser = user.build({
-        first_name: fname,
-        last_name: lname,
-        email: email,
-        password: hashedPassword
-    });
-
-    newUser.save().then(() => console.log(`User saved`));
-}
-
 module.exports = {
     initialize,
     sync
