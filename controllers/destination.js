@@ -4,7 +4,7 @@ const User = db['user'];
 
 // GET /destinations
 // Auth: User
-const getAll = async (req, res, next) => {
+const getDestinations = async (req, res, next) => {
     const destinations = await Destination.findAll();
     res.render('destinations', { destinations : destinations});
 };
@@ -12,18 +12,15 @@ const getAll = async (req, res, next) => {
 // GET /destinations/new
 // Auth: User
 const getDestinationsNew = (req, res, next) => {
-    res.render('destination_create');
+    res.render('destination_new');
 };
 
 // POST /destinations/new
 // Auth: User
 const postDestinationsNew = async (req, res, next) => {
-
-    //TODO: Check if user is authenticated and use the proper user_id
-    const user_id = 2;
-
+    const user_id = req.session.user_id;
     const user = await User.findByPk(user_id);
-    if (!user) res.json({ message: `User with id ${user_id} was not found. Destination will not be created` });
+    if (!user) res.redirect('/login');
 
     Destination.create({
         description: req.body.description,
@@ -36,7 +33,7 @@ const postDestinationsNew = async (req, res, next) => {
         res.redirect(`/destinations/${json.id}`);
     }).catch(err => {
         console.log(err);
-        res.json({ message: "Something went wrong." });
+        res.json({ message: "Something went wrong." }); // FIXME: has to give user an error on the frontend
     });
 };
 
@@ -44,12 +41,21 @@ const postDestinationsNew = async (req, res, next) => {
 // Auth: User
 const getDestination = async (req, res, next) => {
     const destination = await Destination.findByPk(req.params.id);
+    if (!destination) res.redirect('/destinations');
 
-    if (!destination) res.json({ message: "Destination not found" });
     res.render('destination_view', { destination : destination });
 };
 
-// PUT /destinations/:id
+// GET /destinations/:id/edit
+// Auth: User
+const getDestinationEdit = async (req, res, next) => {
+    const destination = await Destination.findByPk(req.params.id);
+    if (!destination) res.redirect('/destinations');
+
+    res.render('destination_edit', { destination : destination });
+};
+
+// PUT /destinations/:id/edit
 // Auth: User
 const updateDestination = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update destinations they created, unless signed in user is admin
@@ -67,10 +73,10 @@ const updateDestination = async (req, res, next) => {
         }
     }).then(() => {
         console.log(`Destination (id:${req.params.id}) has been updated succesfully`);
-        res.json({ message: `Destination (id:${req.params.id}) has been updated succesfully` });
+        res.redirect(`/destinations/${req.params.id}`);
     }).catch(err => {
         console.log(err);
-        res.json({ message: "Something went wrong with destination update" });
+        res.redirect(`/destinations/${req.params.id}/edit`);
     });
 };
 
@@ -84,18 +90,19 @@ const deleteDestination = (req, res, next) => {
         }
     }).then(() => {
         console.log(`Deleted destination with Id ${req.params.id}`);
-        res.json({ message: `Deleted destination with Id ${req.params.id}` });
+        res.redirect('/destinations');
     }).catch(err => {
         console.log(err);
-        res.json({ message: `Could not delete destination with Id ${req.params.id}. Something went wrong` });
+        res.redirect(`/destinations/${req.params.id}`);
     });
 
 };
 
 module.exports = {
-    getAll,
+    getDestinations,
     postDestinationsNew,
     getDestination,
+    getDestinationEdit,
     updateDestination,
     deleteDestination,
     getDestinationsNew

@@ -24,14 +24,23 @@ const postLogin = async (req, res, next) => {
             email: req.body.email
         }
     });
-    if (!user) res.render('login'); // FIXME: modify frontend to receive error and display it
-
+    if (!user) return res.redirect('/login'); // FIXME: modify frontend to receive error and display it
+    console.log(user);
+    //if (!user.password) res.redirect('/login');
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.render('login');
 
     req.session.isAuth = true;
     req.session.user_id = user.id;
-    res.redirect('/destinations'); // FIXME: .render('/');
+    res.redirect('/destinations');
+};
+
+// POST /logout
+// Auth: User
+const postLogout = (req, res, next) => {
+    req.session.isAuth = false;
+    req.session.user_id = null;
+    res.redirect('/login');
 };
 
 // GET /register
@@ -51,7 +60,7 @@ const postRegister = async (req, res, next) => {
         last_name: req.body.last_name,
         email: req.body.email,
         password: hashedPassword
-    }).then(json => {
+    }).then(() => {
         res.redirect('/login');
     }).catch(err => {
         console.log(err);
@@ -63,19 +72,25 @@ const postRegister = async (req, res, next) => {
 // Auth: User
 const getAccount = async (req, res, next) => {
     // TODO: Make sure that signed in user can only view their account, unless signed in user is admin
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.session.user_id);
 
-    if (user) res.json(user);
-    res.json({ message: "User not found" });
+    if (!user) return res.redirect('/login');
+
+    res.render('account', { user: user });
 };
 
 // GET /account/edit
 // Auth: User
-const getAccountEdit = (req, res, next) => {
-    res.json({message:"get /account/edit"}); // FIXME:
+const getAccountEdit = async (req, res, next) => {
+    // TODO: Make sure that signed in user can only view their account, unless signed in user is admin
+    const user = await User.findByPk(req.session.user_id);
+
+    if (!user) return res.redirect('/login');
+
+    res.render('account_edit', { user: user });
 };
 
-// POST /account/edit
+// PUT /account/edit
 // Auth: User
 const updateAccount = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update their account, unless signed in user is admin
@@ -89,7 +104,7 @@ const updateAccount = async (req, res, next) => {
         password: hashedPassword
     }, {
         where: {
-            id: req.params.id
+            id: req.session.user_id
         }
     }).then(() => {
         console.log(`User ${req.body.email} has been updated succesfully`);
@@ -100,31 +115,34 @@ const updateAccount = async (req, res, next) => {
     });
 };
 
-// DELETE /users/:id
-const deleteOne = (req, res, next) => {
+// DELETE /account
+const deleteAccount = (req, res, next) => {
     // TODO: Make sure that signed in user can only delete their own account, unless signed in user is admin
     User.destroy({
         where: {
-            id: req.params.id
+            id: req.session.user_id
         }
     }).then(() => {
         console.log(`Deleted user with Id ${req.params.id}`);
-        res.json({ message: `Deleted user with Id ${req.params.id}` });
+        req.session.isAuth = false;
+        req.session.user_id = null;
+        res.redirect('/login');
     }).catch(err => {
         console.log(err);
-        res.json({ message: `Could not delete user with Id ${req.params.id}. Something went wrong` });
+        res.redirect('/account');
     });
 
 };
 
 module.exports = {
     getAll,
-    deleteOne,
     getLogin,
     postLogin,
+    postLogout,
     getRegister,
     postRegister,
     getAccount,
     getAccountEdit,
-    updateAccount
+    updateAccount,
+    deleteAccount
 };

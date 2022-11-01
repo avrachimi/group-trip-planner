@@ -5,21 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>GroupTripPlanner - Login</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
 
 <body>
-    <form action="/login" method="POST">
+    <section class="login">
         <div class="container">
-            <label for="email"><b>Email</b></label>
-            <input type="email" placeholder="Enter Email" name="email" required>
-
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-
-            <button type="submit">Login</button>
+            <div class="title">
+                <h1>GroupTrip<span>Planner</span></h1>
+            </div>
+            <div class="login-form">
+                <form action="/login" method="post">
+                    <input type="email" placeholder="Email" name="email" id="email" required> <br>
+                    <input type="password" placeholder="Password" name="password" id="password" required><br>
+                    <button type="submit">Login</button>
+                </form>
+                <p class="register-cta">
+                    If you don't have an account, you can <a href="/register">register here</a>.
+                </p>
+            </div>
         </div>
-    </form>
+    </section>
 </body>
 
 </html>

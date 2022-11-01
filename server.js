@@ -32,11 +32,13 @@ app.use(session({
     store: store
 }));
 
+// Setup Views and Public directories
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname + '/public')));
 
+// Routes
 app.use('/', userRoutes);
 app.use('/', destinationRoutes);
 app.use('/', voteRoutes);

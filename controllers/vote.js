@@ -3,13 +3,14 @@ const Vote = db['vote'];
 const Destination = db['destination'];
 
 // GET /votes
-const getAll = async (req, res, next) => {
+const getVotes = async (req, res, next) => {
     const votes = await Vote.findAll();
-    res.json(votes);
+    
+    res.render('votes', { votes:  votes });
 };
 
 // POST /votes
-const createOne = async (req, res, next) => {
+const postVotes = async (req, res, next) => {
     //TODO: Check if user is authenticated and use the proper user_id
     const user_id = 1;
 
@@ -34,7 +35,7 @@ const createOne = async (req, res, next) => {
 };
 
 // GET /votes/:id
-const getOne = async (req, res, next) => {
+const getVote = async (req, res, next) => {
     const vote = await Vote.findByPk(req.params.id);
 
     if (vote) res.json(vote);
@@ -42,7 +43,7 @@ const getOne = async (req, res, next) => {
 };
 
 // PUT /votes/:id
-const updateOne = async (req, res, next) => {
+const updateVote = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update votes they created, unless signed in user is admin
 
     const vote = await Vote.findByPk(req.params.id, { include: Destination });
@@ -70,7 +71,7 @@ const updateOne = async (req, res, next) => {
 };
 
 // DELETE /votes/:id
-const deleteOne = (req, res, next) => {
+const deleteVote = (req, res, next) => {
     // TODO: Make sure that signed in user can only delete votes they created, unless signed in user is admin
     Vote.destroy({
         where: {
@@ -87,9 +88,9 @@ const deleteOne = (req, res, next) => {
 };
 
 module.exports = {
-    getAll,
-    createOne,
-    getOne,
-    updateOne,
-    deleteOne
+    getVotes,
+    postVotes,
+    getVote,
+    updateVote,
+    deleteVote
 };

@@ -2,7 +2,6 @@ const db = require('../models');
 
 function initialize() {
     // Setup relationships
-    // FIXME: Fix OnDelete and OnUpdate options
     db['user'].hasMany(db['destination'], { foreignKey: 'user_id'});
     db['destination'].belongsTo(db['user'], { foreignKey: 'user_id'});
 
@@ -19,7 +18,7 @@ function sync(force = false) {
         .then(() => {
             console.log('Models synced with database');
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 }
 
 module.exports = {

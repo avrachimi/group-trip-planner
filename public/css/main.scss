@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+    --primary-color: blue;
+    --background-color: #eee;
+    --nav-color: #bdbdbd;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+/* Navbar */
+.navbar {
+    height: 3em;
+    background-color: var(--nav-color);
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        h1 {
+            font-size: 1.4em;
+            padding-left: 1em;
+            margin: 0;
+
+            span {
+                color: var(--primary-color);
+            }
+        }
+    }
+
+}
+
+/* Login and Register pages */
+section.login,
+section.register {
+    padding-top: 20vh;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    .container {
+
+        .title {
+            h1 {
+                font-size: 2em;
+                margin: 1em;
+
+                span {
+                    color: var(--primary-color);
+                }
+            }
+        }
+
+        .login-form,
+        .register-form {
+
+            form>input {
+                margin: .7em 0;
+                padding: .4em .3em;
+                width: 17em;
+                border: 1px solid black;
+                border-radius: .2em;
+            }
+
+            form>button {
+                margin: .5em 0;
+                padding: .3em .6em;
+                border: 1px solid var(--primary-color);
+                border-radius: 0.3em;
+                color: white;
+                cursor: pointer;
+                background-color: var(--primary-color);
+            }
+
+            p {
+                font-size: .8em;
+                padding: 1em 0;
+
+                a {
+                    color: var(--primary-color);
+                }
+            }
+        }
+    }
+}
+
+/* Destinations page */
+section.destinations {
+    .container {
+        margin: 0;
+        padding: 0;
+
+        .list-item {
+            cursor: pointer;
+        }
+
+        .row {
+            border: 0.15em solid black;
+            border-color: var(--border-color);
+            border-radius: .5em;
+            padding: .5em 0;
+            margin: .5em .5em;
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+
+            span {
+                float: left;
+                width: 30%;
+                text-align: center;
+            }
+
+            .number {
+                float: left;
+                width: 10%;
+                text-align: center;
+                align-content: center;
+            }
+
+            .city {
+                font-weight: bold;
+            }
+
+            .country {
+                display: none;
+            }
+
+            /* Clear floats after the columns */
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        }
+
+        .content-header {
+            font-weight: bold;
+            border: none;
+            color: white;
+            background-color: var(--primary-color);
+        }
+    }
+}
+
+@media only screen and (min-width: 750px) {
+
+    /* Destinations page */
+    section.destinations {
+        .container {
+            .row {
+                span {
+                    width: 23%;
+                }
+
+                .number {
+                    width: 8%;
+                }
+
+                .country {
+                    display: inherit;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+
+    /* Login and Register pages */
+    section.login,
+    section.register {
+        .container {
+            .title {
+                h1 {
+                    font-size: 2.3em;
+                }
+            }
+        }
+    }
+}
