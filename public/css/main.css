@@ -1,8 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 :root {
-  --primary-color: blue;
   --background-color: #eee;
-  --nav-color: #bdbdbd;
+  --lightest: #00b8ff;
+  --light: #009bd6;
+  --mid: #00719c;
+  --dark: #00415a;
+  --darkest: #001f2b;
 }
 
 * {
@@ -18,22 +21,82 @@ body {
 /* Navbar */
 .navbar {
   height: 3em;
-  background-color: var(--nav-color);
+  color: white;
+  background-color: var(--darkest);
 }
 .navbar .container {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  /* Used in JS to show/hide */
 }
-.navbar .container h1 {
+.navbar .container .logo {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
   font-size: 1.4em;
   padding-left: 1em;
   margin: 0;
 }
-.navbar .container h1 span {
-  color: var(--primary-color);
+.navbar .container .logo span {
+  color: var(--lightest);
+}
+.navbar .container nav {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  width: 40%;
+  right: 0;
+  top: 0;
+  background-color: var(--darkest);
+  height: 100vh;
+  padding: 1em;
+}
+.navbar .container nav ul {
+  list-style-type: none;
+  margin-top: 4em;
+}
+.navbar .container nav ul li.current {
+  font-weight: bold;
+}
+.navbar .container nav ul a,
+.navbar .container nav ul form {
+  padding: 0.5em;
+  font-size: 1.3em;
+  text-align: right;
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+.navbar .container nav ul button {
+  font-size: 1em;
+  border: none;
+  border-radius: 1em;
+  background-color: inherit;
+  color: white;
+  cursor: pointer;
+}
+.navbar .container nav ul a:hover,
+.navbar .container nav ul button:hover {
+  font-weight: bold;
+}
+.navbar .container nav .mobile-exit-menu {
+  float: right;
+  margin: 0.5em;
+  cursor: pointer;
+}
+.navbar .container .mobile-open-menu {
+  display: block;
+  padding-right: 1em;
+  width: 1.4em;
+  height: 1.4em;
+  cursor: pointer;
+}
+.navbar .container .show-menu {
+  display: block;
+  transform: 5s;
 }
 
 /* Login and Register pages */
@@ -51,7 +114,7 @@ section.register .container .title h1 {
 }
 section.login .container .title h1 span,
 section.register .container .title h1 span {
-  color: var(--primary-color);
+  color: var(--lightest);
 }
 section.login .container .login-form form > input,
 section.login .container .register-form form > input,
@@ -69,11 +132,11 @@ section.register .container .login-form form > button,
 section.register .container .register-form form > button {
   margin: 0.5em 0;
   padding: 0.3em 0.6em;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--lightest);
   border-radius: 0.3em;
   color: white;
   cursor: pointer;
-  background-color: var(--primary-color);
+  background-color: var(--lightest);
 }
 section.login .container .login-form p,
 section.login .container .register-form p,
@@ -86,12 +149,13 @@ section.login .container .login-form p a,
 section.login .container .register-form p a,
 section.register .container .login-form p a,
 section.register .container .register-form p a {
-  color: var(--primary-color);
+  color: var(--lightest);
 }
 
 /* Destinations page */
 section.destinations .container {
   margin: 0;
+  margin-top: 0.6em;
   padding: 0;
 }
 section.destinations .container .list-item {
@@ -99,17 +163,17 @@ section.destinations .container .list-item {
 }
 section.destinations .container .row {
   border: 0.15em solid black;
-  border-color: var(--border-color);
+  border-color: var(--mid);
   border-radius: 0.5em;
-  padding: 0.5em 0;
-  margin: 0.5em 0.5em;
-  color: var(--primary-color);
+  padding: 0.4em 0;
+  margin: 0.3em 0.5em;
+  color: var(--dark);
   background-color: var(--secondary-color);
   /* Clear floats after the columns */
 }
 section.destinations .container .row span {
   float: left;
-  width: 30%;
+  width: 35%;
   text-align: center;
 }
 section.destinations .container .row .number {
@@ -118,10 +182,14 @@ section.destinations .container .row .number {
   text-align: center;
   align-content: center;
 }
+section.destinations .container .row .vote-count {
+  width: 20%;
+}
 section.destinations .container .row .city {
   font-weight: bold;
 }
-section.destinations .container .row .country {
+section.destinations .container .row .country,
+section.destinations .container .row .nights-stay {
   display: none;
 }
 section.destinations .container .row:after {
@@ -133,19 +201,62 @@ section.destinations .container .content-header {
   font-weight: bold;
   border: none;
   color: white;
-  background-color: var(--primary-color);
+  background-color: var(--mid);
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 600px) {
   /* Destinations page */
+  section.destinations .container {
+    margin-top: 1em;
+  }
+  section.destinations .container .row {
+    margin: 0.45em 1.3em;
+  }
   section.destinations .container .row span {
-    width: 23%;
+    width: 25%;
   }
-  section.destinations .container .row .number {
-    width: 8%;
+  section.destinations .container .row .number,
+section.destinations .container .row .vote-count {
+    width: 12.5%;
   }
-  section.destinations .container .row .country {
+  section.destinations .container .row .nights-stay {
     display: inherit;
+  }
+}
+@media only screen and (min-width: 750px) {
+  /* Navbar */
+  .navbar .container {
+    display: grid;
+    grid-template-columns: 35vw auto;
+    /* Used in JS to show/hide */
+  }
+  .navbar .container nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: none;
+    position: unset;
+    width: 100%;
+    height: inherit;
+    padding: 0;
+  }
+  .navbar .container nav ul {
+    display: flex;
+    margin: 0;
+  }
+  .navbar .container nav ul a,
+.navbar .container nav ul form {
+    font-size: 1em;
+    padding: 0.1em 1em;
+  }
+  .navbar .container nav .mobile-exit-menu {
+    display: none;
+  }
+  .navbar .container .mobile-open-menu {
+    display: none;
+  }
+  .navbar .container .show-menu {
+    display: block;
   }
 }
 @media only screen and (min-width: 1000px) {
@@ -153,5 +264,22 @@ section.destinations .container .content-header {
   section.login .container .title h1,
 section.register .container .title h1 {
     font-size: 2.3em;
+  }
+  /* Destinations page */
+  section.destinations .container {
+    margin-top: 1.5em;
+  }
+  section.destinations .container .row {
+    margin: 0.6em 3em;
+  }
+  section.destinations .container .row span {
+    width: 20%;
+  }
+  section.destinations .container .row .number,
+section.destinations .container .row .vote-count {
+    width: 10%;
+  }
+  section.destinations .container .row .country {
+    display: inherit;
   }
 }/*# sourceMappingURL=main.css.map */

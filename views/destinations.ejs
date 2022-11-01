@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,29 +9,27 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
-<body>
-    <!-- 
-        <% if (locals.destinations) { %> 
-        <% for (let i = 0; i < locals.destinations.length; i++) { %> 
-            <a href="/destinations/<%=locals.destinations[i].id%>">
-                <div>
-                    <span>ID: <%= locals.destinations[i].id %></span>
-                    <span>Country: <%= locals.destinations[i].country %></span>
-                    <span>City: <%= locals.destinations[i].city %></span>
-                    <span>Budget: <%= locals.destinations[i].budget %></span>
-                </div>
-            </a>
-        <% } %> 
-    <% } %>
 
-    <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-    </form>
-    -->
+<body>
     <div class="navbar">
         <div class="container">
-            <h1>GroupTrip<span>Planner</span></h1>
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
             <!-- TODO LATER: Mobile and Desktkop Nav-->
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li class="current"><a href="/destinations">Destinations</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
     <section class="destinations">
@@ -41,23 +40,37 @@
                 <span class="country">Country</span>
                 <span class="budget">Budget</span>
                 <span class="nights-stay">Stay</span>
+                <span class="vote-count">Votes</span>
             </div>
             <div id="destination-list" class="list">
-                <% if (locals.destinations) { %> 
-                    <% for (let i = 0; i < locals.destinations.length; i++) { %>
-                            <div id="<%= locals.destinations[i].id %>" class="list-item row" onclick="viewDestination(this.id)">
-                                <span class="number"><%= i + 1 %> </span>
-                                <span class="city"><%= locals.destinations[i].city %></span>
-                                <span class="country"><%= locals.destinations[i].country %></span>
-                                <span class="budget">&#x20AC;<%= locals.destinations[i].budget %></span>
-                                <span class="nights-stay"><%= locals.destinations[i].nights_stay %> nights</span>
-                            </div>
+                <% if (locals.destinations) { %>
+                    <% for (let i=0; i < locals.destinations.length; i++) { %>
+                        <div id="<%= locals.destinations[i].id %>" class="list-item row"
+                            onclick="viewDestination(this.id)">
+                            <span class="number">
+                                <%= i + 1 %>
+                            </span>
+                            <span class="city">
+                                <%= locals.destinations[i].city %>
+                            </span>
+                            <span class="country">
+                                <%= locals.destinations[i].country %>
+                            </span>
+                            <span class="budget">&#x20AC;<%= locals.destinations[i].budget %></span>
+                            <span class="nights-stay">
+                                <%= locals.destinations[i].nights_stay %> nights
+                            </span>
+                            <span class="vote-count">
+                                <%= locals.destinations[i].vote_count %>
+                            </span>
+                        </div>
                         </a>
-                    <% } %> 
-                <% } %>
+                        <% } %>
+                            <% } %>
             </div>
         </div>
     </section>
     <script src="/js/destinations.js"></script>
 </body>
+
 </html>

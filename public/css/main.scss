@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 :root {
-    --primary-color: blue;
     --background-color: #eee;
-    --nav-color: #bdbdbd;
+    --lightest: #00b8ff;
+    --light: #009bd6;
+    --mid: #00719c;
+    --dark: #00415a;
+    --darkest: #001f2b;
 }
 
 * {
@@ -19,23 +22,93 @@ body {
 /* Navbar */
 .navbar {
     height: 3em;
-    background-color: var(--nav-color);
+    color: white;
+    background-color: var(--darkest);
 
     .container {
         width: 100%;
         height: 100%;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
 
-        h1 {
+        .logo {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
             font-size: 1.4em;
             padding-left: 1em;
             margin: 0;
 
             span {
-                color: var(--primary-color);
+                color: var(--lightest);
             }
+        }
+
+        nav {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 40%;
+            right: 0;
+            top: 0;
+            background-color: var(--darkest);
+            height: 100vh;
+            padding: 1em;
+
+            ul {
+                list-style-type: none;
+                margin-top: 4em;
+
+                li.current {
+                        font-weight: bold;
+                }
+
+                a,
+                form {
+                    padding: .5em;
+                    font-size: 1.3em;
+                    text-align: right;
+                    display: block;
+                    text-decoration: none;
+                    color: white;
+                }
+
+                button {
+                    font-size: 1em;
+                    border: none;
+                    border-radius: 1em;
+                    background-color: inherit;
+                    color: white;
+                    cursor: pointer;
+                }
+
+                a:hover,
+                button:hover {
+                    font-weight: bold;
+                }
+
+            }
+
+            .mobile-exit-menu {
+                float: right;
+                margin: .5em;
+                cursor: pointer;
+            }
+        }
+
+        .mobile-open-menu {
+            display: block;
+            padding-right: 1em;
+            width: 1.4em;
+            height: 1.4em;
+            cursor: pointer;
+        }
+
+        /* Used in JS to show/hide */
+        .show-menu {
+            display: block;
+            transform: 5s;
         }
     }
 
@@ -57,7 +130,7 @@ section.register {
                 margin: 1em;
 
                 span {
-                    color: var(--primary-color);
+                    color: var(--lightest);
                 }
             }
         }
@@ -76,11 +149,11 @@ section.register {
             form>button {
                 margin: .5em 0;
                 padding: .3em .6em;
-                border: 1px solid var(--primary-color);
+                border: 1px solid var(--lightest);
                 border-radius: 0.3em;
                 color: white;
                 cursor: pointer;
-                background-color: var(--primary-color);
+                background-color: var(--lightest);
             }
 
             p {
@@ -88,7 +161,7 @@ section.register {
                 padding: 1em 0;
 
                 a {
-                    color: var(--primary-color);
+                    color: var(--lightest);
                 }
             }
         }
@@ -99,6 +172,7 @@ section.register {
 section.destinations {
     .container {
         margin: 0;
+        margin-top: .6em;
         padding: 0;
 
         .list-item {
@@ -107,16 +181,16 @@ section.destinations {
 
         .row {
             border: 0.15em solid black;
-            border-color: var(--border-color);
+            border-color: var(--mid);
             border-radius: .5em;
-            padding: .5em 0;
-            margin: .5em .5em;
-            color: var(--primary-color);
+            padding: .4em 0;
+            margin: .3em .5em;
+            color: var(--dark);
             background-color: var(--secondary-color);
 
             span {
                 float: left;
-                width: 30%;
+                width: 35%;
                 text-align: center;
             }
 
@@ -127,11 +201,16 @@ section.destinations {
                 align-content: center;
             }
 
+            .vote-count {
+                width: 20%;
+            }
+
             .city {
                 font-weight: bold;
             }
 
-            .country {
+            .country,
+            .nights-stay {
                 display: none;
             }
 
@@ -147,30 +226,84 @@ section.destinations {
             font-weight: bold;
             border: none;
             color: white;
-            background-color: var(--primary-color);
+            background-color: var(--mid);
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) {
+
+    /* Destinations page */
+    section.destinations {
+        .container {
+            margin-top: 1em;
+
+            .row {
+                margin: .45em 1.3em;
+
+                span {
+                    width: 25%;
+                }
+
+                .number,
+                .vote-count {
+                    width: 12.5%;
+                }
+
+                .nights-stay {
+                    display: inherit;
+                }
+            }
         }
     }
 }
 
 @media only screen and (min-width: 750px) {
 
-    /* Destinations page */
-    section.destinations {
+    /* Navbar */
+    .navbar {
+
         .container {
-            .row {
-                span {
-                    width: 23%;
+            display: grid;
+            grid-template-columns: 35vw auto;
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: none;
+                position: unset;
+                width: 100%;
+                height: inherit;
+                padding: 0;
+
+                ul {
+                    display: flex;
+                    margin: 0;
+
+                    a,
+                    form {
+                        font-size: 1em;
+                        padding: .1em 1em;
+                    }
+
                 }
 
-                .number {
-                    width: 8%;
-                }
-
-                .country {
-                    display: inherit;
+                .mobile-exit-menu {
+                    display: none;
                 }
             }
+
+            .mobile-open-menu {
+                display: none;
+            }
+
+            /* Used in JS to show/hide */
+            .show-menu {
+                display: block;
+            }
         }
+
     }
 }
 
@@ -183,6 +316,30 @@ section.destinations {
             .title {
                 h1 {
                     font-size: 2.3em;
+                }
+            }
+        }
+    }
+
+    /* Destinations page */
+    section.destinations {
+        .container {
+            margin-top: 1.5em;
+
+            .row {
+                margin: .6em 3em;
+
+                span {
+                    width: 20%;
+                }
+
+                .number,
+                .vote-count {
+                    width: 10%;
+                }
+
+                .country {
+                    display: inherit;
                 }
             }
         }
