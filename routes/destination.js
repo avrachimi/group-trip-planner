@@ -9,9 +9,9 @@ router.get('/destinations/new', authUser, destinationController.getDestinationsN
 router.post('/destinations/new', authUser, destinationController.postDestinationsNew);
 
 router.get('/destinations/:id', authUser, destinationController.getDestination);
+router.delete('/destinations/:id', authUser, destinationController.deleteDestination);
 router.get('/destinations/:id/edit', authUser, destinationController.getDestinationEdit);
 router.put('/destinations/:id/edit', authUser, destinationController.updateDestination);
-router.delete('/destinations/:id', authUser, destinationController.deleteDestination);
 
 
 module.exports = router;

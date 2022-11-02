@@ -22,9 +22,19 @@
                     <input type="text" placeholder="Enter Last Name" name="last_name" id="last_name" required> <br>
                     <input type="email" placeholder="Enter Email" name="email" id="email" required> <br>
                     <input type="password" placeholder="Enter Password" name="password" id="password"
-                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
-                        title="Must contain at least one of each: number, uppercase and lowercase letter, symbols. Must be at least 8 characters"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                        title="Must contain at least one of each: number, uppercase and lowercase letters. Must be at least 8 characters"
                         required> <br>
+                    <input type="password" placeholder="Confirm Password" name="password_confirm" id="password_confirm"
+                        required> <br>
+                    <span id="message" class="message no-message"></span>
+                    <% if (locals.message) { %> 
+                        <% if (locals.message.errors[0].message === 'email must be unique') { %> 
+                            <span class="message">Account with email <%= locals.message.errors[0].value %> already exists.</span>
+                        <% } else { %> 
+                            <span class="message"><%= locals.message %> </span>
+                        <% } %> 
+                    <% } %> 
                     <button id="submitBtn" type="submit">Register</button>
                 </form>
                 <p class="login">
@@ -33,6 +43,37 @@
             </div>
         </div>
     </section>
+    <script>
+        const message = document.getElementById('message');
+        const password1 = document.getElementById('password');
+        const password2 = document.getElementById('password_confirm');
+        let didFillBothPasswords = false;
+
+        password2.onkeyup = () => {
+            if (password1.value === password2.value) {
+                message.classList.add('no-message');
+                message.value = '';
+                didFillBothPasswords = true;
+            }
+            else {
+                message.classList.remove('no-message');
+                message.innerHTML = 'Passwords must match.';
+            }
+        };
+
+        password1.onkeyup = () => {
+            if (didFillBothPasswords) {
+                if (password1.value === password2.value) {
+                    message.classList.add('no-message');
+                    message.innerHTML = '';
+                }
+                else {
+                    message.classList.remove('no-message');
+                    message.innerHTML = 'Passwords must match.';
+                }
+            }
+        };
+    </script>
 </body>
 
 </html>

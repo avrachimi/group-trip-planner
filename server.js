@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const db_helper = require('./helpers/database');
 const db = require('./models');
+const methodOverride = require("method-override");
 const userRoutes = require('./routes/user');
 const destinationRoutes = require('./routes/destination');
 const voteRoutes = require('./routes/vote');
@@ -38,6 +39,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname + '/public')));
 
+app.use(methodOverride('_method'));
+
 // Routes
 app.use('/', userRoutes);
 app.use('/', destinationRoutes);
@@ -45,6 +48,6 @@ app.use('/', voteRoutes);
 
 // Sync database with models
 db_helper.initialize();
-db_helper.sync(); //FIXME: should not be forced
+db_helper.sync();
 
 app.listen(port, () => console.log(`Server running on PORT ${port}`));

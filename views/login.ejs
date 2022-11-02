@@ -20,6 +20,9 @@
                 <form action="/login" method="post">
                     <input type="email" placeholder="Email" name="email" id="email" required> <br>
                     <input type="password" placeholder="Password" name="password" id="password" required><br>
+                    <% if (locals.message) { %>
+                        <span class="message"><%= locals.message %> </span>
+                    <% } %>
                     <button type="submit">Login</button>
                 </form>
                 <p class="register-cta">

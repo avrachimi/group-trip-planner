@@ -6,17 +6,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destinations</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
 
 <body>
-    <% if (locals.destination) { %>
-        <div>
-            <span>ID: <%= locals.destination.id %></span>
-            <span>Country: <%= locals.destination.country %></span>
-            <span>City: <%= locals.destination.city %></span>
-            <span>Budget: <%= locals.destination.budget %></span>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    <% } %>
+        <section class="destination-view">
+            <div class="container">
+                <div class="details">
+                    <div class="location">
+                        <h1 class="city">
+                            <%= locals.destination.city %>
+                        </h1>
+                        <h2 class="country">
+                            <%= locals.destination.country %>
+                        </h2>
+                    </div>
+
+                    <div class="description">
+                        <h3>Description</h3>
+                        <p>
+                            <%= locals.destination.description %>
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="budget">
+                            <h3>Budget</h3>
+                            <span>&#x20AC;<%= locals.destination.budget %></span>
+                        </div>
+                        <div class="nights-stay">
+                            <h3>Stay</h3>
+                            <span>
+                                <%= locals.destination.nights_stay %> nights
+                            </span>
+                        </div>
+                        <div class="vote-count">
+                            <h3>Votes</h3>
+                            <span>
+                                <%= locals.destination.vote_count %>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="vote-row">
+                    <div class="vote">
+                        <h4>Want to Go?</h4>
+                        <form action="/votes" method="post">
+                            <input type="radio" id="vote_yes" name="vote_choice">
+                            <label for="vote_choice">Yes</label><br>
+                            <input type="radio" id="vote_no" name="vote_choice">
+                            <label for="vote_choice">No</label><br>
+                            <button type="submit">Vote</button>
+                        </form>
+                    </div>
+                </div>
+                <% if (locals.isOwner) { %> 
+                    <div class="modify">
+                        <form action="/destinations/<%= locals.destination.id %>/edit" method="get">
+                            <button class="edit" type="submit">Edit Destination</button>
+                        </form>
+                        <button id="<%= locals.destination.id %>" class="delete" type="submit" onclick="deleteDestination(this.id)">Delete Destination</button>
+                        <span id="message" class="message no-message"></span>
+                    </div>
+                <% } %> 
+            </div>
+        </section>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script>
+        
+        function deleteDestination(id) {
+            const message = document.getElementById('message');
+
+            fetch('/destinations/' + id, {
+                method: 'DELETE'
+            }).then(res => res.json()
+            ).then(json => {
+                if (json.isDeleted) {
+                    window.location.href = `/destinations`;
+                }
+                else {
+                    message.classList.add('no-message');
+                    message.innerHTML = 'Could not delete destination. Please try again.';
+                }
+            });
+        }
+        </script>
 </body>
 
 </html>

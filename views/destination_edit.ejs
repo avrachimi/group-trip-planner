@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Destination</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <section class="destination-edit">
+        <div class="container">
+            <form id="editDestinationForm" action="/destinations/<%= locals.destination.id %>/edit?_method=PUT" method="post">
+                <h1>Edit Destination</h1>
+                <div class="description">
+                    <label for="description"><b>Description</b></label>
+                    <textarea id="description" name="description" placeholder="Enter description here.."
+                        form="editDestinationForm" required><%= locals.destination.description %></textarea>
+                </div>
+                
+                <div class="short-data">
+                    <div>
+                        <div class="country">
+                            <label for="country"><b>Country</b></label>
+                            <input id="country" type="text" placeholder="Enter Country" name="country" value="<%= locals.destination.country %>" required>
+                        </div>
+                        
+                        <div class="city">
+                            <label for="city"><b>City</b></label>
+                            <input id="city" type="text" placeholder="Enter City" name="city" value="<%= locals.destination.city %>" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="budget">
+                            <label for="budget"><b>Budget (&#x20AC; / person)</b></label>
+                            <input id="budget" type="number" name="budget" min="0" value="<%= locals.destination.budget %>" required>
+                        </div>
+        
+                        <div class="nights_stay">
+                            <label for="nights_stay"><b>Stay (Nights)</b></label>
+                            <input id="nights_stay" type="number" name="nights_stay" min="0" value="<%= locals.destination.nights_stay %>" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <span id="message" class="message no-message"></span>
+                </div>
+
+                <button id="<%= locals.destination.id %> " type="submit">Update Destination Details</button>
+            </form>
+        </div>
+    </section>
+    <script src="/js/nav.js"></script>
+    <script>
+        function updateDestination(id) {
+            const message = document.getElementById('message');
+            const body = {
+                description: document.getElementById('description').value,
+                country: document.getElementById('country').value,
+                city: document.getElementById('city').value,
+                budget: parseInt(document.getElementById('budget').value),
+                nights_stay: parseInt(document.getElementById('nights_stay').value)
+            };
+            console.log(body);
+
+            fetch('/destinations/' + id + '/edit', {
+                method: 'PUT',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            }).then(res => {
+                if (res.status === 201) {
+                    console.log('updated');
+                    window.location.href = `/destinations/` + id;
+                }
+                else {
+                    console.log('err');
+                    message.classList.add('no-message');
+                    message.innerHTML = 'Could not update destination. Please try again.';
+                }
+            }
+            ).then(json => {
+                console.log(json);
+            });
+        }
+    </script>
+</body>
+
+</html>

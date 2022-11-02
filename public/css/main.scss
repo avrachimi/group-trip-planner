@@ -61,7 +61,7 @@ body {
                 margin-top: 4em;
 
                 li.current {
-                        font-weight: bold;
+                    font-weight: bold;
                 }
 
                 a,
@@ -137,7 +137,6 @@ section.register {
 
         .login-form,
         .register-form {
-
             form>input {
                 margin: .7em 0;
                 padding: .4em .3em;
@@ -158,11 +157,28 @@ section.register {
 
             p {
                 font-size: .8em;
-                padding: 1em 0;
+                padding: 1em 0 2em 0;
 
                 a {
                     color: var(--lightest);
                 }
+            }
+
+            .message {
+                display: inherit;
+                padding: .3em .6em;
+                margin: .4em 4.7em;
+                width: 17em;
+                border: 2px solid red;
+                border-radius: .2em;
+                font-size: .8em;
+                font-weight: bold;
+                color: white;
+                background-color: rgba(194, 63, 63, 0.69);
+            }
+
+            .no-message {
+                display: none;
             }
         }
     }
@@ -228,6 +244,229 @@ section.destinations {
             color: white;
             background-color: var(--mid);
         }
+
+        .create-new {
+            margin: 1em 0;
+            display: flex;
+            justify-content: space-evenly;
+
+            button {
+                padding: .6em .8em;
+                border: none;
+                border-radius: .3em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--mid);
+                cursor: pointer;
+            }
+        }
+
+        .no-destinations {
+            padding: 5em 0;
+            text-align: center;
+        }
+    }
+}
+
+/* Single Destination page */
+section.destination-view {
+    padding: 2em 1.5em 1em 1.5em;
+
+    .container {
+        color: black;
+        display: block;
+
+        .details {
+            color: var(--darkest);
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+
+            .location {
+                text-align: center;
+                align-self: center;
+                padding-bottom: 1.5em;
+
+                .city {
+                    font-size: 2.2em;
+                    margin-right: -.2em;
+                }
+
+                .country {
+                    font-size: 1.2em;
+                    color: var(--dark);
+                }
+            }
+
+            .description {
+                padding: 1em 0;
+
+                p {
+                    text-align: justify;
+                }
+            }
+
+            .row {
+                padding: 1em 0;
+                display: flex;
+                justify-content: space-around;
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+        .vote-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            width: 101%;
+
+            .vote {
+                width: 13em;
+                margin: .4em 0;
+                padding: .5em 0;
+                border: none;
+                border-radius: 1em;
+                color: white;
+                background-color: var(--mid);
+                text-align: center;
+
+                h4 {}
+
+                form {
+                    margin: .5em 0;
+
+                    input,
+                    label {
+                        margin: .5em 0;
+                    }
+
+                    button {
+                        margin-top: .5em;
+                        padding: .5em .6em;
+                        border: none;
+                        border-radius: 0.5em;
+                        font-weight: bold;
+                        color: white;
+                        background-color: var(--lightest);
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .modify {
+            margin-top: 2em;
+            display: flex;
+            justify-content: space-evenly;
+
+            form {
+                margin: 0 .5em;
+                width: 50%;
+
+                .edit {
+                    width: 100%;
+                }
+            }
+
+            .delete {
+                margin: 0 .5em;
+                width: 50%;
+            }
+
+            .delete,
+            .edit {
+                padding: .5em 0;
+                border: none;
+                border-radius: .5em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--dark);
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+/* New & Edit Destination page */
+section.destination-new,
+section.destination-edit {
+    .container {
+        margin: 0;
+        padding: 1em;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            text-align: center;
+            color: var(--darkest);
+
+            h1 {
+                margin: 1em 0;
+            }
+
+            label {
+                display: block;
+            }
+
+            .description {
+                padding: 1em;
+                text-align: left;
+
+                textarea {
+                    width: 80vw;
+                    height: 20vh;
+                }
+            }
+
+            .short-data {
+                padding: 1em 0;
+                display: flex;
+                justify-content: space-between;
+                width: 80vw;
+
+                input {
+                    width: 90%;
+                    text-align: center;
+                }
+
+                div>div {
+                    padding: .4em 0;
+                }
+            }
+
+            button {
+                margin: 1em;
+                margin-top: 3em;
+                padding: 1em 1.2em;
+                border: none;
+                border-radius: .3em;
+                font-weight: bold;
+                color: var(--darkest);
+                background-color: var(--lightest);
+                cursor: pointer;
+            }
+
+            .message {
+                display: inherit;
+                padding: .3em .6em;
+                margin: .4em 4.7em;
+                width: 17em;
+                border: 2px solid red;
+                border-radius: .2em;
+                font-size: .8em;
+                font-weight: bold;
+                color: white;
+                background-color: rgba(194, 63, 63, 0.69);
+            }
+
+            .no-message {
+                display: none;
+            }
+        }
     }
 }
 
@@ -252,6 +491,18 @@ section.destinations {
 
                 .nights-stay {
                     display: inherit;
+                }
+            }
+        }
+    }
+
+    /* New Destination page */
+    section.destination-new,
+    section.destination-edit {
+        .container {
+            form {
+                .short-data {
+                    justify-content: space-around;
                 }
             }
         }
@@ -305,6 +556,43 @@ section.destinations {
         }
 
     }
+
+    /* Single Destination page */
+    section.destination-view {
+        padding: 3em 3em 1em 3em;
+
+        .container {
+
+            .modify {
+
+                form {
+                    margin: 0 1em;
+                }
+
+                .delete {
+                    margin: 0 1em;
+                }
+
+                .delete,
+                .edit {
+                    padding: .9em 0;
+                }
+            }
+        }
+    }
+
+    /* New & Edit Destination page */
+    section.destination-new,
+    section.destination-edit {
+        .container {
+            form {
+                h1 {
+                    margin-top: 1.2em;
+                }
+            }
+        }
+    }
+
 }
 
 @media only screen and (min-width: 1000px) {
@@ -318,28 +606,110 @@ section.destinations {
                     font-size: 2.3em;
                 }
             }
+
+            .login-form,
+            .register-form {
+
+                .message {
+                    margin: .4em 6.9em;
+                }
+            }
+        }
+
+        /* Destinations page */
+        section.destinations {
+            .container {
+                margin-top: 1.5em;
+
+                .row {
+                    margin: .6em 3em;
+
+                    span {
+                        width: 20%;
+                    }
+
+                    .number,
+                    .vote-count {
+                        width: 10%;
+                    }
+
+                    .country {
+                        display: inherit;
+                    }
+                }
+            }
         }
     }
 
     /* Destinations page */
     section.destinations {
         .container {
-            margin-top: 1.5em;
+            margin: 1em 2em;
 
             .row {
-                margin: .6em 3em;
-
                 span {
-                    width: 20%;
+                    width: 19%;
                 }
 
                 .number,
                 .vote-count {
-                    width: 10%;
+                    width: 12%;
                 }
 
                 .country {
                     display: inherit;
+                }
+            }
+        }
+    }
+
+    /* Single Destination page */
+    section.destination-view {
+        padding: 3em 3em 1em 3em;
+
+        .container {
+
+            .modify {
+
+                form {
+                    margin: 0 3em
+                }
+
+                .delete {
+                    margin: 0 3em;
+                }
+
+                .delete,
+                .edit {
+                    padding: 1.2em 0;
+                }
+            }
+        }
+    }
+
+    /* New & Edit Destination page */
+    section.destination-new,
+    section.destination-edit {
+        .container {
+            form {
+                h1 {
+                    margin-top: 1.5em;
+                }
+
+                .description {
+
+                    textarea {
+                        width: 70vw;
+                        height: 30vh;
+                    }
+                }
+
+                .short-data {
+                    width: 70vw;
+                }
+
+                button {
+                    padding: 1.3em 1.6em;
                 }
             }
         }

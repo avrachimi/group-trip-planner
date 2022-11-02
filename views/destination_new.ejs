@@ -1,31 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Destination</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
+
 <body>
-    <form id="newDestinationForm" action="/destinations/new" method="POST">
+    <div class="navbar">
         <div class="container">
-            <label for="description"><b>Description</b></label>
-            <textarea style="width: 90%;" name="description" placeholder="Enter description here.." form="newDestinationForm" required></textarea>
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
 
-            <label for="country"><b>Country</b></label>
-            <input type="text" placeholder="Enter Country" name="country" required>
-
-            <label for="city"><b>City</b></label>
-            <input type="text" placeholder="Enter City" name="city" required>
-
-            <label for="budget"><b>Budget</b></label>
-            <input type="number" name="budget" min="0" required>
-            
-            <label for="nights_stay"><b>Stay (Nights)</b></label>
-            <input type="number" name="nights_stay" min="0" required>
-            
-            <button type="submit">Create Destination</button>
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </form>
+    </div>
+    <section class="destination-new">
+        <div class="container">
+            <form id="newDestinationForm" action="/destinations/new" method="post">
+                <h1>Create New Destination</h1>
+                <div class="description">
+                    <label for="description"><b>Description</b></label>
+                    <textarea name="description" placeholder="Enter description here.."
+                        form="newDestinationForm" required></textarea>
+                </div>
+                
+                <div class="short-data">
+                    <div>
+                        <div class="country">
+                            <label for="country"><b>Country</b></label>
+                            <input type="text" placeholder="Enter Country" name="country" required>
+                        </div>
+                        
+                        <div class="city">
+                            <label for="city"><b>City</b></label>
+                            <input type="text" placeholder="Enter City" name="city" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="budget">
+                            <label for="budget"><b>Budget (&#x20AC; / person)</b></label>
+                            <input type="number" name="budget" min="0" required>
+                        </div>
+        
+                        <div class="nights_stay">
+                            <label for="nights_stay"><b>Stay (Nights)</b></label>
+                            <input type="number" name="nights_stay" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <% if (locals.message) { %> 
+                        <span class="message"><%= locals.message %> </span>
+                    <% } %> 
+                </div>
+
+                <button type="submit">Create Destination</button>
+            </form>
+        </div>
+    </section>
+    <script src="/js/nav.js"></script>
 </body>
+
 </html>

@@ -24,11 +24,11 @@ const postLogin = async (req, res, next) => {
             email: req.body.email
         }
     });
-    if (!user) return res.redirect('/login'); // FIXME: modify frontend to receive error and display it
+    if (!user) return res.render('login', { message: 'Incorrect email and/or password'});
     console.log(user);
-    //if (!user.password) res.redirect('/login');
+
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.render('login');
+    if (!validPassword) return res.render('login', { message: 'Incorrect email and/or password'});
 
     req.session.isAuth = true;
     req.session.user_id = user.id;
@@ -64,7 +64,7 @@ const postRegister = async (req, res, next) => {
         res.redirect('/login');
     }).catch(err => {
         console.log(err);
-        res.redirect('/register');
+        res.render('register', { message: err});
     });
 };
 

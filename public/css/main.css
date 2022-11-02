@@ -143,13 +143,34 @@ section.login .container .register-form p,
 section.register .container .login-form p,
 section.register .container .register-form p {
   font-size: 0.8em;
-  padding: 1em 0;
+  padding: 1em 0 2em 0;
 }
 section.login .container .login-form p a,
 section.login .container .register-form p a,
 section.register .container .login-form p a,
 section.register .container .register-form p a {
   color: var(--lightest);
+}
+section.login .container .login-form .message,
+section.login .container .register-form .message,
+section.register .container .login-form .message,
+section.register .container .register-form .message {
+  display: inherit;
+  padding: 0.3em 0.6em;
+  margin: 0.4em 4.7em;
+  width: 17em;
+  border: 2px solid red;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(194, 63, 63, 0.69);
+}
+section.login .container .login-form .no-message,
+section.login .container .register-form .no-message,
+section.register .container .login-form .no-message,
+section.register .container .register-form .no-message {
+  display: none;
 }
 
 /* Destinations page */
@@ -203,6 +224,203 @@ section.destinations .container .content-header {
   color: white;
   background-color: var(--mid);
 }
+section.destinations .container .create-new {
+  margin: 1em 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+section.destinations .container .create-new button {
+  padding: 0.6em 0.8em;
+  border: none;
+  border-radius: 0.3em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--mid);
+  cursor: pointer;
+}
+section.destinations .container .no-destinations {
+  padding: 5em 0;
+  text-align: center;
+}
+
+/* Single Destination page */
+section.destination-view {
+  padding: 2em 1.5em 1em 1.5em;
+}
+section.destination-view .container {
+  color: black;
+  display: block;
+}
+section.destination-view .container .details {
+  color: var(--darkest);
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+section.destination-view .container .details .location {
+  text-align: center;
+  align-self: center;
+  padding-bottom: 1.5em;
+}
+section.destination-view .container .details .location .city {
+  font-size: 2.2em;
+  margin-right: -0.2em;
+}
+section.destination-view .container .details .location .country {
+  font-size: 1.2em;
+  color: var(--dark);
+}
+section.destination-view .container .details .description {
+  padding: 1em 0;
+}
+section.destination-view .container .details .description p {
+  text-align: justify;
+}
+section.destination-view .container .details .row {
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  width: 100%;
+}
+section.destination-view .container .vote-row {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  width: 101%;
+}
+section.destination-view .container .vote-row .vote {
+  width: 13em;
+  margin: 0.4em 0;
+  padding: 0.5em 0;
+  border: none;
+  border-radius: 1em;
+  color: white;
+  background-color: var(--mid);
+  text-align: center;
+}
+section.destination-view .container .vote-row .vote form {
+  margin: 0.5em 0;
+}
+section.destination-view .container .vote-row .vote form input,
+section.destination-view .container .vote-row .vote form label {
+  margin: 0.5em 0;
+}
+section.destination-view .container .vote-row .vote form button {
+  margin-top: 0.5em;
+  padding: 0.5em 0.6em;
+  border: none;
+  border-radius: 0.5em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--lightest);
+  cursor: pointer;
+}
+section.destination-view .container .modify {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-evenly;
+}
+section.destination-view .container .modify form {
+  margin: 0 0.5em;
+  width: 50%;
+}
+section.destination-view .container .modify form .edit {
+  width: 100%;
+}
+section.destination-view .container .modify .delete {
+  margin: 0 0.5em;
+  width: 50%;
+}
+section.destination-view .container .modify .delete,
+section.destination-view .container .modify .edit {
+  padding: 0.5em 0;
+  border: none;
+  border-radius: 0.5em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--dark);
+  cursor: pointer;
+}
+
+/* New & Edit Destination page */
+section.destination-new .container,
+section.destination-edit .container {
+  margin: 0;
+  padding: 1em;
+}
+section.destination-new .container form,
+section.destination-edit .container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  color: var(--darkest);
+}
+section.destination-new .container form h1,
+section.destination-edit .container form h1 {
+  margin: 1em 0;
+}
+section.destination-new .container form label,
+section.destination-edit .container form label {
+  display: block;
+}
+section.destination-new .container form .description,
+section.destination-edit .container form .description {
+  padding: 1em;
+  text-align: left;
+}
+section.destination-new .container form .description textarea,
+section.destination-edit .container form .description textarea {
+  width: 80vw;
+  height: 20vh;
+}
+section.destination-new .container form .short-data,
+section.destination-edit .container form .short-data {
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+}
+section.destination-new .container form .short-data input,
+section.destination-edit .container form .short-data input {
+  width: 90%;
+  text-align: center;
+}
+section.destination-new .container form .short-data div > div,
+section.destination-edit .container form .short-data div > div {
+  padding: 0.4em 0;
+}
+section.destination-new .container form button,
+section.destination-edit .container form button {
+  margin: 1em;
+  margin-top: 3em;
+  padding: 1em 1.2em;
+  border: none;
+  border-radius: 0.3em;
+  font-weight: bold;
+  color: var(--darkest);
+  background-color: var(--lightest);
+  cursor: pointer;
+}
+section.destination-new .container form .message,
+section.destination-edit .container form .message {
+  display: inherit;
+  padding: 0.3em 0.6em;
+  margin: 0.4em 4.7em;
+  width: 17em;
+  border: 2px solid red;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(194, 63, 63, 0.69);
+}
+section.destination-new .container form .no-message,
+section.destination-edit .container form .no-message {
+  display: none;
+}
 
 @media only screen and (min-width: 600px) {
   /* Destinations page */
@@ -221,6 +439,11 @@ section.destinations .container .row .vote-count {
   }
   section.destinations .container .row .nights-stay {
     display: inherit;
+  }
+  /* New Destination page */
+  section.destination-new .container form .short-data,
+section.destination-edit .container form .short-data {
+    justify-content: space-around;
   }
 }
 @media only screen and (min-width: 750px) {
@@ -258,28 +481,108 @@ section.destinations .container .row .vote-count {
   .navbar .container .show-menu {
     display: block;
   }
+  /* Single Destination page */
+  section.destination-view {
+    padding: 3em 3em 1em 3em;
+  }
+  section.destination-view .container .modify form {
+    margin: 0 1em;
+  }
+  section.destination-view .container .modify .delete {
+    margin: 0 1em;
+  }
+  section.destination-view .container .modify .delete,
+section.destination-view .container .modify .edit {
+    padding: 0.9em 0;
+  }
+  /* New & Edit Destination page */
+  section.destination-new .container form h1,
+section.destination-edit .container form h1 {
+    margin-top: 1.2em;
+  }
 }
 @media only screen and (min-width: 1000px) {
   /* Login and Register pages */
+  section.login,
+section.register {
+    /* Destinations page */
+  }
   section.login .container .title h1,
 section.register .container .title h1 {
     font-size: 2.3em;
   }
-  /* Destinations page */
-  section.destinations .container {
+  section.login .container .login-form .message,
+section.login .container .register-form .message,
+section.register .container .login-form .message,
+section.register .container .register-form .message {
+    margin: 0.4em 6.9em;
+  }
+  section.login section.destinations .container,
+section.register section.destinations .container {
     margin-top: 1.5em;
   }
-  section.destinations .container .row {
+  section.login section.destinations .container .row,
+section.register section.destinations .container .row {
     margin: 0.6em 3em;
   }
-  section.destinations .container .row span {
+  section.login section.destinations .container .row span,
+section.register section.destinations .container .row span {
     width: 20%;
+  }
+  section.login section.destinations .container .row .number,
+section.login section.destinations .container .row .vote-count,
+section.register section.destinations .container .row .number,
+section.register section.destinations .container .row .vote-count {
+    width: 10%;
+  }
+  section.login section.destinations .container .row .country,
+section.register section.destinations .container .row .country {
+    display: inherit;
+  }
+  /* Destinations page */
+  section.destinations .container {
+    margin: 1em 2em;
+  }
+  section.destinations .container .row span {
+    width: 19%;
   }
   section.destinations .container .row .number,
 section.destinations .container .row .vote-count {
-    width: 10%;
+    width: 12%;
   }
   section.destinations .container .row .country {
     display: inherit;
+  }
+  /* Single Destination page */
+  section.destination-view {
+    padding: 3em 3em 1em 3em;
+  }
+  section.destination-view .container .modify form {
+    margin: 0 3em;
+  }
+  section.destination-view .container .modify .delete {
+    margin: 0 3em;
+  }
+  section.destination-view .container .modify .delete,
+section.destination-view .container .modify .edit {
+    padding: 1.2em 0;
+  }
+  /* New & Edit Destination page */
+  section.destination-new .container form h1,
+section.destination-edit .container form h1 {
+    margin-top: 1.5em;
+  }
+  section.destination-new .container form .description textarea,
+section.destination-edit .container form .description textarea {
+    width: 70vw;
+    height: 30vh;
+  }
+  section.destination-new .container form .short-data,
+section.destination-edit .container form .short-data {
+    width: 70vw;
+  }
+  section.destination-new .container form button,
+section.destination-edit .container form button {
+    padding: 1.3em 1.6em;
   }
 }/*# sourceMappingURL=main.css.map */

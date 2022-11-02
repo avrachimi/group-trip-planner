@@ -14,7 +14,6 @@
     <div class="navbar">
         <div class="container">
             <a class="logo" href="/">GroupTrip<span>Planner</span></a>
-            <!-- TODO LATER: Mobile and Desktkop Nav-->
             <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
 
             <nav>
@@ -34,43 +33,51 @@
     </div>
     <section class="destinations">
         <div class="container">
-            <div class="content-header row">
-                <span class="number">#</span>
-                <span class="city">City</span>
-                <span class="country">Country</span>
-                <span class="budget">Budget</span>
-                <span class="nights-stay">Stay</span>
-                <span class="vote-count">Votes</span>
-            </div>
-            <div id="destination-list" class="list">
-                <% if (locals.destinations) { %>
-                    <% for (let i=0; i < locals.destinations.length; i++) { %>
-                        <div id="<%= locals.destinations[i].id %>" class="list-item row"
-                            onclick="viewDestination(this.id)">
-                            <span class="number">
-                                <%= i + 1 %>
-                            </span>
-                            <span class="city">
-                                <%= locals.destinations[i].city %>
-                            </span>
-                            <span class="country">
-                                <%= locals.destinations[i].country %>
-                            </span>
-                            <span class="budget">&#x20AC;<%= locals.destinations[i].budget %></span>
-                            <span class="nights-stay">
-                                <%= locals.destinations[i].nights_stay %> nights
-                            </span>
-                            <span class="vote-count">
-                                <%= locals.destinations[i].vote_count %>
-                            </span>
-                        </div>
-                        </a>
-                        <% } %>
+            <% if (locals.destinations.length > 0) { %> 
+                <div class="content-header row">
+                    <span class="number">#</span>
+                    <span class="city">City</span>
+                    <span class="country">Country</span>
+                    <span class="budget">Budget</span>
+                    <span class="nights-stay">Stay</span>
+                    <span class="vote-count">Votes</span>
+                </div>
+                <div id="destination-list" class="list">
+                    <% if (locals.destinations) { %>
+                        <% for (let i=0; i < locals.destinations.length; i++) { %>
+                            <div id="<%= locals.destinations[i].id %>" class="list-item row"
+                                onclick="viewDestination(this.id)">
+                                <span class="number">
+                                    <%= i + 1 %>
+                                </span>
+                                <span class="city">
+                                    <%= locals.destinations[i].city %>
+                                </span>
+                                <span class="country">
+                                    <%= locals.destinations[i].country %>
+                                </span>
+                                <span class="budget">&#x20AC;<%= locals.destinations[i].budget %></span>
+                                <span class="nights-stay">
+                                    <%= locals.destinations[i].nights_stay %> nights
+                                </span>
+                                <span class="vote-count">
+                                    <%= locals.destinations[i].vote_count %>
+                                </span>
+                            </div>
+                            </a>
                             <% } %>
+                                <% } %>
+                </div>
+            <% } else { %>
+                <h2 class="no-destinations">There are no destinations yet.</h2>
+            <% } %> 
+            <div class="create-new">
+                <button onclick="createDestination()">Create New</button>
             </div>
         </div>
     </section>
     <script src="/js/destinations.js"></script>
+    <script src="/js/nav.js"></script>
 </body>
 
 </html>
