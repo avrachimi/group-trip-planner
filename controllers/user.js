@@ -12,7 +12,7 @@ const getAll = async (req, res, next) => {
 // GET /login
 // Auth: None
 const getLogin = (req, res, next) => {
-    if (req.session.isAuth) res.redirect('/destinations');
+    if (req.session.isAuth) return res.redirect('/destinations');
     res.render('login');
 };
 
@@ -71,7 +71,6 @@ const postRegister = async (req, res, next) => {
 // GET /account
 // Auth: User
 const getAccount = async (req, res, next) => {
-    // TODO: Make sure that signed in user can only view their account, unless signed in user is admin
     const user = await User.findByPk(req.session.user_id);
 
     if (!user) return res.redirect('/login');
@@ -82,7 +81,6 @@ const getAccount = async (req, res, next) => {
 // GET /account/edit
 // Auth: User
 const getAccountEdit = async (req, res, next) => {
-    // TODO: Make sure that signed in user can only view their account, unless signed in user is admin
     const user = await User.findByPk(req.session.user_id);
 
     if (!user) return res.redirect('/login');
@@ -93,7 +91,6 @@ const getAccountEdit = async (req, res, next) => {
 // PUT /account/edit
 // Auth: User
 const updateAccount = async (req, res, next) => {
-    // TODO: Make sure that signed in user can only update their account, unless signed in user is admin
     // Hash password
     let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -117,7 +114,6 @@ const updateAccount = async (req, res, next) => {
 
 // DELETE /account
 const deleteAccount = (req, res, next) => {
-    // TODO: Make sure that signed in user can only delete their own account, unless signed in user is admin
     User.destroy({
         where: {
             id: req.session.user_id
