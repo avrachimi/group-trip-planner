@@ -307,8 +307,11 @@ section.destination-view .container .vote-row .vote form label {
   margin: 0.5em 0;
 }
 section.destination-view .container .vote-row .vote form button {
+  text-align: center;
+  margin: 0 0.5em;
   margin-top: 0.5em;
-  padding: 0.5em 0.6em;
+  width: 5em;
+  height: 2.5em;
   border: none;
   border-radius: 0.5em;
   font-weight: bold;
@@ -316,25 +319,42 @@ section.destination-view .container .vote-row .vote form button {
   background-color: var(--lightest);
   cursor: pointer;
 }
+section.destination-view .container .message {
+  text-align: center;
+  display: block;
+  padding: 0.3em 0.6em;
+  margin: 0.4em auto;
+  width: 17em;
+  border: 2px solid red;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(194, 63, 63, 0.69);
+}
+section.destination-view .container .no-message {
+  display: none;
+}
 section.destination-view .container .modify {
   margin-top: 2em;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
 }
 section.destination-view .container .modify form {
-  margin: 0 0.5em;
+  margin: 0.6em 0.5em;
   width: 50%;
 }
 section.destination-view .container .modify form .edit {
   width: 100%;
 }
 section.destination-view .container .modify .delete {
-  margin: 0 0.5em;
+  margin: 0.6em 0.5em;
   width: 50%;
 }
 section.destination-view .container .modify .delete,
 section.destination-view .container .modify .edit {
-  padding: 0.5em 0;
+  padding: 1.2em 0;
   border: none;
   border-radius: 0.5em;
   font-weight: bold;
@@ -386,6 +406,7 @@ section.destination-edit .container form .short-data {
 section.destination-new .container form .short-data input,
 section.destination-edit .container form .short-data input {
   width: 90%;
+  height: 2em;
   text-align: center;
 }
 section.destination-new .container form .short-data div > div,
@@ -422,6 +443,136 @@ section.destination-edit .container form .no-message {
   display: none;
 }
 
+/* View Account page */
+section.account .container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  color: var(--darkest);
+  width: 70vw;
+}
+section.account .container h1 {
+  margin: 1em 0;
+}
+section.account .container .details {
+  width: 100%;
+}
+section.account .container .details label {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+section.account .container .details span {
+  margin: 0;
+  font-size: 1em;
+}
+section.account .container .details .first-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5em 0;
+}
+section.account .container .details .last-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5em 0;
+}
+section.account .container .details .email {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5em 0;
+}
+section.account .container .modify {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+section.account .container .modify form {
+  margin: 0.6em 0.5em;
+  width: 100%;
+}
+section.account .container .modify form .edit {
+  width: 100%;
+}
+section.account .container .modify .delete {
+  margin: 0.6em 0.5em;
+  width: 100%;
+}
+section.account .container .modify .delete,
+section.account .container .modify .edit {
+  padding: 1.2em 0.3em;
+  border: none;
+  border-radius: 0.5em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--dark);
+  cursor: pointer;
+}
+
+/* Edit Account page */
+section.account-edit .container {
+  color: var(--darkest);
+  display: block;
+}
+section.account-edit .container h1 {
+  margin: 1em 0;
+  text-align: center;
+}
+section.account-edit .container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+section.account-edit .container form .details {
+  width: 80vw;
+}
+section.account-edit .container form .details .first-name,
+section.account-edit .container form .details .last-name,
+section.account-edit .container form .details .email,
+section.account-edit .container form .details .password {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6em 0;
+}
+section.account-edit .container form .details .first-name input,
+section.account-edit .container form .details .last-name input,
+section.account-edit .container form .details .email input,
+section.account-edit .container form .details .password input {
+  width: 15em;
+  height: 2em;
+  padding: 0 0.2em;
+}
+section.account-edit .container form button {
+  margin-top: 1.5em;
+  padding: 1.2em 1em;
+  border: none;
+  border-radius: 0.5em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--dark);
+  cursor: pointer;
+}
+section.account-edit .container form .message {
+  display: inherit;
+  padding: 0.3em 0.6em;
+  margin: 0.4em 4.7em;
+  width: 17em;
+  border: 2px solid red;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(194, 63, 63, 0.69);
+}
+section.account-edit .container form .no-message {
+  display: none;
+}
+
 @media only screen and (min-width: 600px) {
   /* Destinations page */
   section.destinations .container {
@@ -444,6 +595,10 @@ section.destinations .container .row .vote-count {
   section.destination-new .container form .short-data,
 section.destination-edit .container form .short-data {
     justify-content: space-around;
+  }
+  /* Edit Account page */
+  section.account-edit .container form .details {
+    width: 70vw;
   }
 }
 @media only screen and (min-width: 750px) {
@@ -485,20 +640,46 @@ section.destination-edit .container form .short-data {
   section.destination-view {
     padding: 3em 3em 1em 3em;
   }
+  section.destination-view .container .modify {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   section.destination-view .container .modify form {
-    margin: 0 1em;
+    margin: 0.6em 0.5em;
+    width: 50%;
+  }
+  section.destination-view .container .modify form .edit {
+    width: 100%;
   }
   section.destination-view .container .modify .delete {
-    margin: 0 1em;
+    margin: 0.6em 0.5em;
+    width: 50%;
   }
   section.destination-view .container .modify .delete,
 section.destination-view .container .modify .edit {
-    padding: 0.9em 0;
+    padding: 1.2em 0;
+    border: none;
+    border-radius: 0.5em;
+    font-weight: bold;
+    color: white;
+    background-color: var(--dark);
+    cursor: pointer;
   }
   /* New & Edit Destination page */
   section.destination-new .container form h1,
 section.destination-edit .container form h1 {
     margin-top: 1.2em;
+  }
+  /* View Account page */
+  section.account .container {
+    margin-top: 2em;
+    width: 60vw;
+  }
+  /* Edit Account page */
+  section.account-edit .container form .details {
+    width: 50vw;
   }
 }
 @media only screen and (min-width: 1000px) {
@@ -557,6 +738,11 @@ section.destinations .container .row .vote-count {
   section.destination-view {
     padding: 3em 3em 1em 3em;
   }
+  section.destination-view .container .modify {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
   section.destination-view .container .modify form {
     margin: 0 3em;
   }
@@ -584,5 +770,14 @@ section.destination-edit .container form .short-data {
   section.destination-new .container form button,
 section.destination-edit .container form button {
     padding: 1.3em 1.6em;
+  }
+  /* View Account page */
+  section.account .container {
+    margin-top: 3em;
+    width: 50vw;
+  }
+  /* Edit Account page */
+  section.account-edit .container form .details {
+    width: 40vw;
   }
 }/*# sourceMappingURL=main.css.map */

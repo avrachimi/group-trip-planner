@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li class="current"><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <section class="account">
+            <div class="container">
+                <h1>My Account</h1>
+                <div class="details">
+                    <div class="first-name">
+                        <label for="first-name">First Name:</label>
+                        <span name="first-name">
+                            <%= locals.user.first_name %>
+                        </span>
+                    </div>
+
+                    <div class="last-name">
+                        <label for="last-name">Last Name:</label>
+                        <span name="last-name">
+                            <%= locals.user.last_name %>
+                        </span>
+                    </div>
+
+                    <div class="email">
+                        <label for="email">Email:</label>
+                        <span name="email">
+                            <%= locals.user.email %>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <% if (locals.message) { %>
+                        <span class="message">
+                            <%= locals.message %>
+                        </span>
+                        <% } %>
+                </div>
+                <div class="modify">
+                    <form action="/account/edit" method="get">
+                        <button class="edit" type="submit">Edit Account</button>
+                    </form>
+                    <form action="/account/edit/password" method="get">
+                        <button class="edit" type="submit">Change Password</button>
+                    </form>
+                    <button class="delete" onclick="deleteAccount()" disabled>Delete Account</button>
+                </div>
+                <span id="message" class="message no-message"></span>
+            </div>
+        </section>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script>
+
+        function deleteAccount() {
+            const message = document.getElementById('message');
+
+            fetch('/account', {
+                method: 'DELETE'
+            }).then(res => res.json()
+            ).then(json => {
+                if (json.isDeleted) {
+                    window.location.href = `/login`;
+                }
+                else {
+                    message.classList.add('no-message');
+                    message.innerHTML = 'Could not delete account. Please try again.';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

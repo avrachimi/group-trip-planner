@@ -3,6 +3,7 @@ const Vote = db['vote'];
 const Destination = db['destination'];
 
 // GET /votes
+// Auth: User
 const getVotes = async (req, res, next) => {
     const votes = await Vote.findAll();
     
@@ -10,31 +11,51 @@ const getVotes = async (req, res, next) => {
 };
 
 // POST /votes
+// Auth: User
 const postVotes = async (req, res, next) => {
-    //TODO: Check if user is authenticated and use the proper user_id
-    const user_id = 1;
+    const user_id = req.session.user_id;
+    const choice = req.body.choice;
 
     const destination = await Destination.findByPk(req.body.destination_id);
-    if (!destination) res.json({ message: `Destination with id ${req.body.destination_id} does not exist, so vote is invalid.` });
+    if (!destination) return res.json({ destination: destination, isOwner: user_id === destination.user_id, message: "Could not find destination." });
 
-    Vote.create({
-        choice: req.body.choice,
-        user_id: user_id,
-        destination_id: req.body.destination_id
-    }).then(json => {
-        // Update vote_count field on Destination row    
-        if (req.body.choice) {
-            destination.vote_count++;
-            destination.save();
+    Vote.findOne({
+        where: {
+            user_id: user_id
         }
-        res.json(json);
-    }).catch(err => {
-        console.log(err);
-        res.json({ message: "Something went wrong." });
-    });
+    }).then(vote => {
+        if (vote) { // Update
+            vote.update({ choice: choice });
+            vote.save();
+            return res.json({ destination: destination, isOwner: user_id === destination.user_id });
+        }
+        else { // Create
+            Vote.create({
+                choice: choice,
+                user_id: user_id,
+                destination_id: destination.id
+            }).then(json => {
+                // Update vote_count field on Destination row    
+                if (choice) {
+                    destination.vote_count++;
+                }
+                else {
+                    destination.vote_count--;
+                }
+                destination.save();
+
+                return res.json({ destination: destination, isOwner: user_id === destination.user_id });
+            }).catch(err => {
+                console.log(err);
+                return res.json({ message: "Something went wrong." });
+            });
+        }
+    }).catch(() => res.json({ message: "Something went wrong." }));
+
 };
 
 // GET /votes/:id
+// Auth: User
 const getVote = async (req, res, next) => {
     const vote = await Vote.findByPk(req.params.id);
 
@@ -43,6 +64,7 @@ const getVote = async (req, res, next) => {
 };
 
 // PUT /votes/:id
+// Auth: User
 const updateVote = async (req, res, next) => {
     // TODO: Make sure that signed in user can only update votes they created, unless signed in user is admin
 
@@ -71,6 +93,7 @@ const updateVote = async (req, res, next) => {
 };
 
 // DELETE /votes/:id
+// Auth: User
 const deleteVote = (req, res, next) => {
     // TODO: Make sure that signed in user can only delete votes they created, unless signed in user is admin
     Vote.destroy({

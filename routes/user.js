@@ -18,6 +18,8 @@ router.get('/account', authUser, userController.getAccount);
 
 router.get('/account/edit', authUser, userController.getAccountEdit);
 router.put('/account/edit', authUser, userController.updateAccount);
+router.get('/account/edit/password', authUser, userController.getAccountEditPassword);
+router.put('/account/edit/password', authUser, userController.updateAccountPassword);
 router.delete('/account', authUser, userController.deleteAccount); // FIXME:
 
 

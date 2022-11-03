@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const db_helper = require('./helpers/database');
@@ -40,6 +41,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/public')));
 
 app.use(methodOverride('_method'));
+
 
 // Routes
 app.use('/', userRoutes);

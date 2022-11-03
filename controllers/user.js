@@ -91,14 +91,15 @@ const getAccountEdit = async (req, res, next) => {
 // PUT /account/edit
 // Auth: User
 const updateAccount = async (req, res, next) => {
-    // Hash password
-    let hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = await User.findByPk(req.session.user_id);
+
+    const matchingPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!matchingPassword) return res.render('account_edit', { user: user, message: 'Incorrect password.'});
 
     User.update({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        email: req.body.email,
-        password: hashedPassword
+        email: req.body.email
     }, {
         where: {
             id: req.session.user_id
@@ -112,6 +113,38 @@ const updateAccount = async (req, res, next) => {
     });
 };
 
+// GET /account/edit/password
+// Auth: User
+const getAccountEditPassword = async (req, res, next) => {
+    res.render('account_edit_password');
+};
+
+// PUT /account/edit/password
+// Auth: User
+const updateAccountPassword = async (req, res, next) => {
+    const user = await User.findByPk(req.session.user_id);
+
+    const matchingPassword = await bcrypt.compare(req.body.curr_password, user.password);
+    if (!matchingPassword) return res.render('account_edit_password', { message: 'Incorrect password.'});
+
+    // Hash password
+    let hashedPassword = await bcrypt.hash(req.body.new_password, 10);
+
+    User.update({
+        password: hashedPassword
+    }, {
+        where: {
+            id: req.session.user_id
+        }
+    }).then(() => {
+        console.log(`User ${req.body.email} has changed their password succesfully`);
+        res.redirect('/account');
+    }).catch(err => {
+        console.log(err);
+        res.json({ message: "Something went wrong with password change" });
+    });
+};
+
 // DELETE /account
 const deleteAccount = (req, res, next) => {
     User.destroy({
@@ -122,10 +155,10 @@ const deleteAccount = (req, res, next) => {
         console.log(`Deleted user with Id ${req.params.id}`);
         req.session.isAuth = false;
         req.session.user_id = null;
-        res.redirect('/login');
+        res.json({ isDeleted: true });
     }).catch(err => {
         console.log(err);
-        res.redirect('/account');
+        res.json({ isDeleted: false });
     });
 
 };
@@ -140,5 +173,7 @@ module.exports = {
     getAccount,
     getAccountEdit,
     updateAccount,
+    getAccountEditPassword,
+    updateAccountPassword,
     deleteAccount
 };

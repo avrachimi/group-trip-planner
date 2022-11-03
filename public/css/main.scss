@@ -332,8 +332,6 @@ section.destination-view {
                 background-color: var(--mid);
                 text-align: center;
 
-                h4 {}
-
                 form {
                     margin: .5em 0;
 
@@ -343,8 +341,11 @@ section.destination-view {
                     }
 
                     button {
+                        text-align: center;
+                        margin: 0 .5em;
                         margin-top: .5em;
-                        padding: .5em .6em;
+                        width: 5em;
+                        height: 2.5em;
                         border: none;
                         border-radius: 0.5em;
                         font-weight: bold;
@@ -356,13 +357,32 @@ section.destination-view {
             }
         }
 
+        .message {
+            text-align: center;
+            display: block;
+            padding: .3em .6em;
+            margin: .4em auto;
+            width: 17em;
+            border: 2px solid red;
+            border-radius: .2em;
+            font-size: .8em;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(194, 63, 63, 0.69);
+        }
+
+        .no-message {
+            display: none;
+        }
+
         .modify {
             margin-top: 2em;
             display: flex;
-            justify-content: space-evenly;
+            flex-direction: column;
+            align-items: center;
 
             form {
-                margin: 0 .5em;
+                margin: .6em .5em;
                 width: 50%;
 
                 .edit {
@@ -371,13 +391,13 @@ section.destination-view {
             }
 
             .delete {
-                margin: 0 .5em;
+                margin: .6em .5em;
                 width: 50%;
             }
 
             .delete,
             .edit {
-                padding: .5em 0;
+                padding: 1.2em 0;
                 border: none;
                 border-radius: .5em;
                 font-weight: bold;
@@ -386,6 +406,7 @@ section.destination-view {
                 cursor: pointer;
             }
         }
+
     }
 }
 
@@ -430,6 +451,7 @@ section.destination-edit {
 
                 input {
                     width: 90%;
+                    height: 2em;
                     text-align: center;
                 }
 
@@ -447,6 +469,158 @@ section.destination-edit {
                 font-weight: bold;
                 color: var(--darkest);
                 background-color: var(--lightest);
+                cursor: pointer;
+            }
+
+            .message {
+                display: inherit;
+                padding: .3em .6em;
+                margin: .4em 4.7em;
+                width: 17em;
+                border: 2px solid red;
+                border-radius: .2em;
+                font-size: .8em;
+                font-weight: bold;
+                color: white;
+                background-color: rgba(194, 63, 63, 0.69);
+            }
+
+            .no-message {
+                display: none;
+            }
+        }
+    }
+}
+
+/* View Account page */
+section.account {
+    .container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        color: var(--darkest);
+        width: 70vw;
+
+        h1 {
+            margin: 1em 0;
+        }
+
+        .details {
+            width: 100%;
+
+            label {
+                margin: 0;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+
+            span {
+                margin: 0;
+                font-size: 1em;
+            }
+
+            .first-name {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: .5em 0;
+            }
+
+            .last-name {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: .5em 0;
+            }
+
+            .email {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: .5em 0;
+            }
+        }
+
+        .modify {
+            margin-top: 2em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            form {
+                margin: .6em .5em;
+                width: 100%;
+
+                .edit {
+                    width: 100%;
+                }
+            }
+
+            .delete {
+                margin: .6em .5em;
+                width: 100%;
+            }
+
+            .delete,
+            .edit {
+                padding: 1.2em .3em;
+                border: none;
+                border-radius: .5em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--dark);
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+/* Edit Account page */
+section.account-edit {
+    .container {
+        color: var(--darkest);
+        display: block;
+
+        h1 {
+            margin: 1em 0;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .details {
+                width: 80vw;
+
+                .first-name,
+                .last-name,
+                .email,
+                .password {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: .6em 0;
+
+                    input {
+                        width: 15em;
+                        height: 2em;
+                        padding: 0 .2em;
+                    }
+                }
+
+            }
+
+            button {
+                margin-top: 1.5em;
+                padding: 1.2em 1em;
+                border: none;
+                border-radius: .5em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--dark);
                 cursor: pointer;
             }
 
@@ -507,6 +681,19 @@ section.destination-edit {
             }
         }
     }
+
+    /* Edit Account page */
+    section.account-edit {
+        .container {
+
+            form {
+                .details {
+                    width: 70vw;
+
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 750px) {
@@ -563,19 +750,36 @@ section.destination-edit {
 
         .container {
 
+
             .modify {
+                margin-top: 2em;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
 
                 form {
-                    margin: 0 1em;
+                    margin: .6em .5em;
+                    width: 50%;
+
+                    .edit {
+                        width: 100%;
+                    }
                 }
 
                 .delete {
-                    margin: 0 1em;
+                    margin: .6em .5em;
+                    width: 50%;
                 }
 
                 .delete,
                 .edit {
-                    padding: .9em 0;
+                    padding: 1.2em 0;
+                    border: none;
+                    border-radius: .5em;
+                    font-weight: bold;
+                    color: white;
+                    background-color: var(--dark);
+                    cursor: pointer;
                 }
             }
         }
@@ -588,6 +792,27 @@ section.destination-edit {
             form {
                 h1 {
                     margin-top: 1.2em;
+                }
+            }
+        }
+    }
+
+    /* View Account page */
+    section.account {
+        .container {
+            margin-top: 2em;
+            width: 60vw;
+        }
+    }
+
+    /* Edit Account page */
+    section.account-edit {
+        .container {
+
+            form {
+                .details {
+                    width: 50vw;
+
                 }
             }
         }
@@ -670,6 +895,9 @@ section.destination-edit {
         .container {
 
             .modify {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
 
                 form {
                     margin: 0 3em
@@ -710,6 +938,27 @@ section.destination-edit {
 
                 button {
                     padding: 1.3em 1.6em;
+                }
+            }
+        }
+    }
+
+    /* View Account page */
+    section.account {
+        .container {
+            margin-top: 3em;
+            width: 50vw;
+        }
+    }
+
+    /* Edit Account page */
+    section.account-edit {
+        .container {
+
+            form {
+                .details {
+                    width: 40vw;
+
                 }
             }
         }
