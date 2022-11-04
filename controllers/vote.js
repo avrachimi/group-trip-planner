@@ -5,7 +5,12 @@ const Destination = db['destination'];
 // GET /votes
 // Auth: User
 const getVotes = async (req, res, next) => {
-    const votes = await Vote.findAll({ include: Destination });
+    const votes = await Vote.findAll({
+        where: {
+            user_id: req.session.user_id
+        },
+        include: Destination
+    });
 
     res.render('votes', { votes: votes });
 };
