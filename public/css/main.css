@@ -299,6 +299,10 @@ section.destination-view .container .vote-row .vote {
   background-color: var(--mid);
   text-align: center;
 }
+section.destination-view .container .vote-row .vote .vote-forms {
+  display: flex;
+  justify-content: space-evenly;
+}
 section.destination-view .container .vote-row .vote form {
   margin: 0.5em 0;
 }

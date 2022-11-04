@@ -332,6 +332,11 @@ section.destination-view {
                 background-color: var(--mid);
                 text-align: center;
 
+                .vote-forms {
+                    display: flex;
+                    justify-content: space-evenly;
+                }
+
                 form {
                     margin: .5em 0;
 
@@ -664,6 +669,7 @@ section.votes {
             margin: .3em .5em;
             color: var(--dark);
             background-color: var(--secondary-color);
+
             span {
                 float: left;
                 width: 60%;
@@ -684,7 +690,7 @@ section.votes {
                 font-weight: bold;
             }
 
-            .voted-on{
+            .voted-on {
                 display: none;
             }
 
@@ -885,31 +891,31 @@ section.votes {
     }
 
     /* Votes page */
-section.votes {
-    .container {
+    section.votes {
+        .container {
 
-        .row {
+            .row {
 
-            span {
-                float: left;
-                width: 30%;
-                text-align: center;
-            }
+                span {
+                    float: left;
+                    width: 30%;
+                    text-align: center;
+                }
 
-            .number {
-                width: 20%;
-            }
+                .number {
+                    width: 20%;
+                }
 
-            .going {
-                width: 20%;
-            }
+                .going {
+                    width: 20%;
+                }
 
-            .voted-on{
-                display: unset;
+                .voted-on {
+                    display: unset;
+                }
             }
         }
     }
-}
 
 }
 

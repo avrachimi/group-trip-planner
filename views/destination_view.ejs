@@ -72,14 +72,16 @@
                 <div class="vote-row">
                     <div class="vote">
                         <h4>Want to Go?</h4>
-                        <form id="vote_form" action="/votes/true" method="post">
-                            <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
-                            <button type="submit" id="vote_true">Yes</button>
-                        </form>
-                        <form action="/votes/false" method="post">
-                            <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
-                            <button type="submit" id="vote_false">No</button>
-                        </form>
+                        <div class="vote-forms">
+                            <form id="vote_form" action="/votes/true" method="post">
+                                <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
+                                <button type="submit" id="vote_true">Yes</button>
+                            </form>
+                            <form action="/votes/false" method="post">
+                                <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
+                                <button type="submit" id="vote_false">No</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div>
