@@ -72,10 +72,13 @@
                 <div class="vote-row">
                     <div class="vote">
                         <h4>Want to Go?</h4>
-                        <form id="vote_form">
+                        <form id="vote_form" action="/votes/true" method="post">
                             <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
-                            <button type="submit" id="vote_true" onclick="vote(this.id)">Yes</button>
-                            <button type="submit" id="vote_false" onclick="vote(this.id)">No</button>
+                            <button type="submit" id="vote_true">Yes</button>
+                        </form>
+                        <form action="/votes/false" method="post">
+                            <input id="document_id" type="number" name="destination_id" value="<%= locals.destination.id %>" hidden>
+                            <button type="submit" id="vote_false">No</button>
                         </form>
                     </div>
                 </div>
@@ -103,6 +106,7 @@
     <script>
 
         function vote(id) {
+            console.log('called vote fn');
             const destination_id = document.getElementById('document_id').value;
             let vote_choice = false;
 
@@ -112,19 +116,24 @@
             else {
                 vote_choice = false;
             }
-
+            console.log('set vote choice');
             fetch('/votes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ choice: vote_choice, destination_id: destination_id })
-            }).then(res => res.json()
-            ).then(json => {
+            }).then(res => {
+                console.log(res);
+                return res.json();
+            }).then(json => {
+                console.log('then');
                 if (json.message) {
                     message.classList.add('no-message');
                     message.innerHTML = 'Could not cast vote. Please try again.';
                 }
+            }).catch(err => {
+                console.error(err);
             });
         }
 

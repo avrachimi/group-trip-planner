@@ -625,7 +625,8 @@ section.account-edit {
             }
 
             .message {
-                display: inherit;
+                text-align: center;
+                display: block;
                 padding: .3em .6em;
                 margin: .4em 4.7em;
                 width: 17em;
@@ -640,6 +641,71 @@ section.account-edit {
             .no-message {
                 display: none;
             }
+        }
+    }
+}
+
+/* Votes page */
+section.votes {
+    .container {
+        margin: 0;
+        margin-top: .6em;
+        padding: 0;
+
+        .list-item {
+            cursor: pointer;
+        }
+
+        .row {
+            border: 0.15em solid black;
+            border-color: var(--mid);
+            border-radius: .5em;
+            padding: .4em 0;
+            margin: .3em .5em;
+            color: var(--dark);
+            background-color: var(--secondary-color);
+            span {
+                float: left;
+                width: 60%;
+                text-align: center;
+            }
+
+            .number {
+                float: left;
+                width: 20%;
+                text-align: center;
+            }
+
+            .going {
+                width: 20%;
+            }
+
+            .destination {
+                font-weight: bold;
+            }
+
+            .voted-on{
+                display: none;
+            }
+
+            /* Clear floats after the columns */
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        }
+
+        .content-header {
+            font-weight: bold;
+            border: none;
+            color: white;
+            background-color: var(--mid);
+        }
+
+        .no-votes {
+            padding: 5em 0;
+            text-align: center;
         }
     }
 }
@@ -817,6 +883,33 @@ section.account-edit {
             }
         }
     }
+
+    /* Votes page */
+section.votes {
+    .container {
+
+        .row {
+
+            span {
+                float: left;
+                width: 30%;
+                text-align: center;
+            }
+
+            .number {
+                width: 20%;
+            }
+
+            .going {
+                width: 20%;
+            }
+
+            .voted-on{
+                display: unset;
+            }
+        }
+    }
+}
 
 }
 

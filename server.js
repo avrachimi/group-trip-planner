@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const userRoutes = require('./routes/user');
 const destinationRoutes = require('./routes/destination');
 const voteRoutes = require('./routes/vote');
+const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -20,6 +21,12 @@ const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 // Session stuff
 const store = new SessionStore({

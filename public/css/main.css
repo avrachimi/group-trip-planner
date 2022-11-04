@@ -558,7 +558,8 @@ section.account-edit .container form button {
   cursor: pointer;
 }
 section.account-edit .container form .message {
-  display: inherit;
+  text-align: center;
+  display: block;
   padding: 0.3em 0.6em;
   margin: 0.4em 4.7em;
   width: 17em;
@@ -571,6 +572,60 @@ section.account-edit .container form .message {
 }
 section.account-edit .container form .no-message {
   display: none;
+}
+
+/* Votes page */
+section.votes .container {
+  margin: 0;
+  margin-top: 0.6em;
+  padding: 0;
+}
+section.votes .container .list-item {
+  cursor: pointer;
+}
+section.votes .container .row {
+  border: 0.15em solid black;
+  border-color: var(--mid);
+  border-radius: 0.5em;
+  padding: 0.4em 0;
+  margin: 0.3em 0.5em;
+  color: var(--dark);
+  background-color: var(--secondary-color);
+  /* Clear floats after the columns */
+}
+section.votes .container .row span {
+  float: left;
+  width: 60%;
+  text-align: center;
+}
+section.votes .container .row .number {
+  float: left;
+  width: 20%;
+  text-align: center;
+}
+section.votes .container .row .going {
+  width: 20%;
+}
+section.votes .container .row .destination {
+  font-weight: bold;
+}
+section.votes .container .row .voted-on {
+  display: none;
+}
+section.votes .container .row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+section.votes .container .content-header {
+  font-weight: bold;
+  border: none;
+  color: white;
+  background-color: var(--mid);
+}
+section.votes .container .no-votes {
+  padding: 5em 0;
+  text-align: center;
 }
 
 @media only screen and (min-width: 600px) {
@@ -680,6 +735,21 @@ section.destination-edit .container form h1 {
   /* Edit Account page */
   section.account-edit .container form .details {
     width: 50vw;
+  }
+  /* Votes page */
+  section.votes .container .row span {
+    float: left;
+    width: 30%;
+    text-align: center;
+  }
+  section.votes .container .row .number {
+    width: 20%;
+  }
+  section.votes .container .row .going {
+    width: 20%;
+  }
+  section.votes .container .row .voted-on {
+    display: unset;
   }
 }
 @media only screen and (min-width: 1000px) {

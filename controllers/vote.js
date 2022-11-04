@@ -5,54 +5,71 @@ const Destination = db['destination'];
 // GET /votes
 // Auth: User
 const getVotes = async (req, res, next) => {
-    const votes = await Vote.findAll();
-    
-    res.render('votes', { votes:  votes });
+    const votes = await Vote.findAll({ include: Destination });
+
+    res.render('votes', { votes: votes });
 };
 
-// POST /votes
+// POST /votes/:choice
 // Auth: User
 const postVotes = async (req, res, next) => {
     const user_id = req.session.user_id;
-    const choice = req.body.choice;
+    const choice = req.params.choice === "true" ? true : false;
 
     const destination = await Destination.findByPk(req.body.destination_id);
-    if (!destination) return res.json({ destination: destination, isOwner: user_id === destination.user_id, message: "Could not find destination." });
+    if (!destination) return res.render('destination_view', { destination: destination, isOwner: user_id === destination.user_id, message: "Could not find destination." });
 
     Vote.findOne({
         where: {
+            destination_id: destination.id,
             user_id: user_id
         }
     }).then(vote => {
+        console.log(vote);
         if (vote) { // Update
-            vote.update({ choice: choice });
-            vote.save();
-            return res.json({ destination: destination, isOwner: user_id === destination.user_id });
+            vote.choice = choice;
+            vote.save().then(() => {
+                countVotes(destination.id).then(count => {
+                    destination.vote_count = count;
+                    destination.save();
+                });
+            });
+
+
+            return res.redirect(`/destinations/${destination.id}`);
         }
         else { // Create
             Vote.create({
                 choice: choice,
                 user_id: user_id,
                 destination_id: destination.id
-            }).then(json => {
+            }).then(async (json) => {
                 // Update vote_count field on Destination row    
-                if (choice) {
-                    destination.vote_count++;
-                }
-                else {
-                    destination.vote_count--;
-                }
-                destination.save();
+                countVotes(destination.id).then(count => {
+                    destination.vote_count = count;
+                    destination.save();
+                });
 
-                return res.json({ destination: destination, isOwner: user_id === destination.user_id });
+
+                return res.redirect(`/destinations/${destination.id}`);
             }).catch(err => {
                 console.log(err);
-                return res.json({ message: "Something went wrong." });
+                return res.render('destination_view', { message: "Something went wrong." });
             });
         }
-    }).catch(() => res.json({ message: "Something went wrong." }));
+    }).catch(() => res.render('destination_view', { message: "Something went wrong." }));
 
 };
+
+async function countVotes(destination_id) {
+    const votes = await Vote.findAll({
+        where: {
+            destination_id: destination_id,
+            choice: true
+        }
+    });
+    return votes.length;
+}
 
 // GET /votes/:id
 // Auth: User

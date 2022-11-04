@@ -8,6 +8,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        full_name: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.first_name} ${this.last_name}`;
+            },
+            set(value) {
+                throw new Error('Do not try to set the `full_name` value!');
+            }
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,

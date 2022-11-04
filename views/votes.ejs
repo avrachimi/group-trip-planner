@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li class="current"><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <section class="votes">
+        <div class="container">
+            <% if (locals.votes.length > 0) { %> 
+                <div class="content-header row">
+                    <span class="number">#</span>
+                    <span class="destination">Destination</span>
+                    <span class="voted-on">Voted On</span>
+                    <span class="going">Going</span>
+                </div>
+                <div id="vote-list" class="list">
+                    <% if (locals.votes) { %>
+                        <% for (let i=0; i < locals.votes.length; i++) { %>
+                            <div id="<%= locals.votes[i].destination.id %>" class="list-item row"
+                                onclick="viewDestination(this.id)">
+                                <span class="number">
+                                    <%= i + 1 %>
+                                </span>
+                                <span class="destination">
+                                    <%= locals.votes[i].destination.name %>
+                                </span>
+                                <span class="voted-on">
+                                    <%= new Date(locals.votes[i].updated_at).toDateString() %>
+                                </span>
+                                <span class="going">
+                                    <% if (locals.votes[i].choice) { %>
+                                        Yes
+                                    <% } else { %> 
+                                        No
+                                    <% } %> 
+                                </span>
+                            </div>
+                            </a>
+                            <% } %>
+                                <% } %>
+                </div>
+            <% } else { %>
+                <h2 class="no-votes">You haven't casted any votes yet.</h2>
+            <% } %> 
+        </div>
+    </section>
+    <script src="/js/destinations.js"></script>
+    <script src="/js/nav.js"></script>
+</body>
+</html>
