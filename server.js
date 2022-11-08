@@ -1,19 +1,21 @@
-require('dotenv').config()
+require('dotenv').config();
+
 const express = require('express');
+const methodOverride = require("method-override");
+const cors = require('cors');
+
 const path = require('path');
 const db_helper = require('./helpers/database');
 const db = require('./models');
-const methodOverride = require("method-override");
+
 const userRoutes = require('./routes/user');
 const destinationRoutes = require('./routes/destination');
 const voteRoutes = require('./routes/vote');
-const cors = require('cors');
+const groupRoutes = require('./routes/group');
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const SessionStore = require('express-session-sequelize')(session.Store);
-
-require('dotenv').config()
 
 const app = express();
 
@@ -54,6 +56,7 @@ app.use(methodOverride('_method'));
 app.use('/', userRoutes);
 app.use('/', destinationRoutes);
 app.use('/', voteRoutes);
+app.use('/', groupRoutes);
 
 // Sync database with models
 db_helper.initialize();

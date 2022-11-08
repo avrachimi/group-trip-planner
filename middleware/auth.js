@@ -6,6 +6,7 @@ const authUser = (req, res, next) => {
         next();
     }
     else {
+        next(); // FIXME: REMOVE LATER
         res.redirect('/login');
     }
 };

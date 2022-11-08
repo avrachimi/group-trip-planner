@@ -10,14 +10,19 @@ function initialize() {
 
     db['destination'].hasMany(db['vote'], { foreignKey: 'destination_id', onDelete: 'CASCADE'});
     db['vote'].belongsTo(db['destination'], { foreignKey: 'destination_id'});
+
+    db['user'].hasMany(db['group'], { foreignKey: 'admin_user_id' });
+    db['group'].belongsTo(db['user'], { foreignKey: 'admin_user_id' });
+
+    db['group'].belongsToMany(db['group_member'], { foreignKey: 'group_id', through: 'group_member_join' });
+    db['group_member'].belongsToMany(db['group'], { foreignKey: 'group_member_id', through: 'group_member_join' });
+
 }
 
 function sync(force = false) {
     db.sequelize.sync({ force: force })
         .then(res => res)
-        .then(() => {
-            console.log('Models synced with database');
-        })
+        .then(() => console.log('Models synced with database'))
         .catch(err => console.error(err));
 }
 
