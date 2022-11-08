@@ -6,7 +6,20 @@ const User = db['user'];
 // GET /groups
 // Auth: User
 const getGroups = async (req, res, next) => {
-    const groups = await Group.findAll({ include: GroupMember });
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
+
+    const groups = await Group.findAll({ 
+        include: [{
+            model: GroupMember,
+            through: {
+                where: {
+                    email: user.email
+                }
+            }
+        }]
+    });
     res.render('groups', { groups: groups });
 };
 
@@ -20,15 +33,28 @@ const getGroupsNew = (req, res, next) => {
 // Auth: User
 const postGroupsNew = async (req, res, next) => {
     const user_id = req.session.user_id;
-    const user = await User.findByPk(1); // TODO:
+    const user = await User.findByPk(user_id);
     if (!user) return res.redirect('/login');
 
     Group.create({
         name: req.body.name,
         admin_user_id: user.id
-    }).then(json => {
-        console.log('created user');
-        //TODO: res.redirect(`/groups`);
+    }).then(group =>{
+        console.log('created group');
+        const group_member_emails = req.body.email;
+        try {
+            group_member_emails.forEach(email => {
+                GroupMember.create({ email: email}).then( member => {
+                    group.addGroupMember(member).then(() => {
+                        console.log(`${email} added as group member`);
+                    });
+                });
+            });
+            res.redirect(`/groups`);
+        } catch (err) {
+            console.log(err);
+            res.render('group_new', { message: "Something went wrong. Please try again." });
+        }
     }).catch(err => {
         console.log(err);
         res.render('group_new', { message: "Something went wrong. Please try again." });
@@ -58,7 +84,7 @@ const updateGroup = async (req, res, next) => {
 
     group.name = req.body.name;
     await group.save();
-    
+
     const groupMembers = group.group_members;
     console.log(groupMembers);
 
