@@ -30,6 +30,18 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Setup Views and Public directories
+app.set('views', path.join(__dirname + '/views'));
+app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname + '/public')));
+
+app.use(methodOverride('_method'));
+
+// Sync database with models
+db_helper.initialize();
+db_helper.sync();
+
 // Session stuff
 const store = new SessionStore({
     db: db.sequelize
@@ -43,23 +55,10 @@ app.use(session({
     store: store
 }));
 
-// Setup Views and Public directories
-app.set('views', path.join(__dirname + '/views'));
-app.set('view engine', 'ejs');
-
-app.use(express.static(path.join(__dirname + '/public')));
-
-app.use(methodOverride('_method'));
-
-
 // Routes
 app.use('/', userRoutes);
 app.use('/', destinationRoutes);
 app.use('/', voteRoutes);
 app.use('/', groupRoutes);
-
-// Sync database with models
-db_helper.initialize();
-db_helper.sync();
 
 app.listen(port, () => console.log(`Server running on PORT ${port}`));
