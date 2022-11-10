@@ -8,10 +8,12 @@ router.get('/groups', authUser, groupController.getGroups);
 router.get('/groups/new', authUser, groupController.getGroupsNew)
 router.post('/groups/new', authUser, groupController.postGroupsNew);
 
+router.get('/groups/:id', authUser, groupController.getGroup);
+router.put('/groups/:id/edit-name', authUser, groupController.updateGroupName);
+router.post('/groups/:id/add-member', authUser, groupController.postGroupMember); // Add group member
+
 router.delete('/groups/:id', authUser, groupController.deleteGroup);
-router.get('/groups/:id/edit', groupController.getGroupEdit); //TODO: Add Auth back
-router.put('/groups/:id/edit', authUser, groupController.updateGroup);
-router.delete('/groups/:group_id/members/:member_id', groupController.deleteGroupMember); //TODO: Add Auth back
+router.delete('/groups/:group_id/members/:member_id', authUser, groupController.deleteGroupMember);
 
 
 module.exports = router;

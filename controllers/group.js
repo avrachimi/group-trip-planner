@@ -10,19 +10,32 @@ const getGroups = async (req, res, next) => {
     const user = await User.findByPk(user_id);
     if (!user) return res.redirect('/login');
 
-    const groups = await Group.findAll({
+    // Accessing group, group_member and group_admin data through GroupMember model
+    const group_members = await GroupMember.findAll({
+        where: {
+            email: user.email
+        },
+        attributes: [],
         include: [
             {
-                model: GroupMember
-            },
-            {
-                model: User
+                model: Group,
+                attributes: ['id', 'name', 'admin_user_id'],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'email']
+                    },
+                    {
+                        model: GroupMember,
+                        attributes: ['id', 'email']
+                    }
+                ]
             }
         ]
     });
-
-    //res.json({ groups: groups, user_id: user.id });
-    res.render('groups', { groups: groups, user_id: user.id });
+    
+    //res.json({ groups: group_members, user_id: user.id });
+    res.render('groups', { groups: group_members, user_id: user.id });
 };
 
 // GET /groups/new
@@ -66,62 +79,74 @@ const postGroupsNew = async (req, res, next) => {
     });
 };
 
-// GET /groups/:id/edit
+// GET /groups/:id
 // Auth: User
-const getGroupEdit = async (req, res, next) => {
+const getGroup = async (req, res, next) => {
     const group = await Group.findByPk(req.params.id, { include: [GroupMember, User] });
     if (!group || group.user.id !== req.session.user_id) return res.redirect('/groups');
 
 
     //res.json({group: group});
-    res.render('group_edit', { group: group });
+    res.render('group_view', { group: group });
 };
 
-// PUT /groups/:id/edit
+// PUT /groups/:id/edit-name
 // Auth: User
-const updateGroup = async (req, res, next) => {
-    const group = await Group.findOne({
-        where: {
-            id: req.params.id,
-            admin_user_id: 1 //TODO: req.session.user_id
-        },
-        include: GroupMember
-    });
-    if (!group) return res.redirect('/groups');
+const updateGroupName = async (req, res, next) => {
+    const group = await Group.findByPk(req.params.id);
+    if (group.admin_user_id !== req.session.user_id) return redirect(`/groups/${group.id}`);
 
-    group.name = req.body.name;
-    await group.save();
-
-    const groupMembers = group.group_members;
-    console.log(groupMembers);
-
-    /*
     Group.update({
         name: req.body.name
     }, {
         where: {
             id: req.params.id,
             admin_user_id: req.session.user_id
-        },
-        include: GroupMember
+        }
     }).then(() => {
         console.log(`Group (id:${req.params.id}) has been updated succesfully`);
         return res.redirect(`/groups/${req.params.id}`);
     }).catch(err => {
         console.log(err);
-        return res.redirect(`/groups/${req.params.id}/edit`);
+        return res.redirect(`/groups/${req.params.id}`); // TODO: Add error message
     });
-    */
+};
+
+// POST /groups/:id/add-member
+// Auth: User
+const postGroupMember = async (req, res, next) => {
+    const group = await Group.findByPk(req.params.id);
+    if (group.admin_user_id !== req.session.user_id) return redirect(`/groups/${group.id}`);
+
+    const member = await GroupMember.findOne({
+        where: {
+            email: req.body.email,
+            group_id: req.params.id
+        }
+    });
+    if (member) return res.render('group_view', {message: `Group member with email ${req.body.email} already exists in this group.`});
+
+    GroupMember.create({
+        email: req.body.email,
+        group_id: req.params.id
+    }).then(() => {
+        console.log(`Group Member ${req.body.email}) has been added to ${group.name} group`);
+        return res.redirect(`/groups/${req.params.id}`);
+    }).catch(err => {
+        console.log(err);
+        return res.redirect(`/groups/${req.params.id}`); // TODO: Add error message
+    });
 };
 
 // DELETE /groups/:id
 // Auth: User
-const deleteGroup = (req, res, next) => {
+const deleteGroup = async (req, res, next) => {
+    const group = await Group.findByPk(req.params.id);
+    if (group.admin_user_id !== req.session.user_id) return redirect(`/groups/${group.id}`);
 
     Group.destroy({
         where: {
-            id: req.params.id,
-            user_id: req.session.user_id
+            id: req.params.id
         }
     }).then(() => {
         console.log(`Deleted Group with Id ${req.params.id}`);
@@ -155,10 +180,11 @@ const deleteGroupMember = async (req, res, next) => {
 
 module.exports = {
     getGroups,
+    getGroupsNew,
     postGroupsNew,
-    getGroupEdit,
-    updateGroup,
+    getGroup,
+    updateGroupName,
+    postGroupMember,
     deleteGroup,
-    deleteGroupMember,
-    getGroupsNew
-};
+    deleteGroupMember
+}
