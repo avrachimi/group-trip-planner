@@ -40,7 +40,7 @@ app.use(methodOverride('_method'));
 
 // Sync database with models
 db_helper.initialize();
-db_helper.sync(true);
+db_helper.sync();
 
 // Session stuff
 const store = new SessionStore({

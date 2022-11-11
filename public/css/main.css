@@ -679,9 +679,6 @@ section.groups .container .row .number {
 section.groups .container .row .members {
   width: 30%;
 }
-section.groups .container .row .city {
-  font-weight: bold;
-}
 section.groups .container .row:after {
   content: "";
   display: table;
@@ -707,7 +704,7 @@ section.groups .container .create-new button {
   background-color: var(--mid);
   cursor: pointer;
 }
-section.groups .container .no-destinations {
+section.groups .container .no-groups {
   padding: 5em 0;
   text-align: center;
 }

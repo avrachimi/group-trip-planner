@@ -769,10 +769,6 @@ section.groups {
                 width: 30%;
             }
 
-            .city {
-                font-weight: bold;
-            }
-
             /* Clear floats after the columns */
             &:after {
                 content: "";
@@ -804,7 +800,7 @@ section.groups {
             }
         }
 
-        .no-destinations {
+        .no-groups {
             padding: 5em 0;
             text-align: center;
         }
