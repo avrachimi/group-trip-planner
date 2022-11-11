@@ -465,6 +465,22 @@ section.destination-edit {
                 }
             }
 
+            .group {
+                label {
+                    font-weight: bold;
+                    margin-bottom: .1em;
+                }
+
+                select {
+                    text-align: center;
+                    padding: .2em;
+                    font-size: .8em;
+                    background-color: white;
+                    border: 1px solid black;
+                    border-radius: .2em;
+                }
+            }
+
             button {
                 margin: 1em;
                 margin-top: 3em;
@@ -716,6 +732,253 @@ section.votes {
     }
 }
 
+/* Groups page */
+section.groups {
+    .container {
+        margin: 0;
+        margin-top: .6em;
+        padding: 0;
+
+        .list-item {
+            cursor: pointer;
+        }
+
+        .row {
+            border: 0.15em solid black;
+            border-color: var(--mid);
+            border-radius: .5em;
+            padding: .4em 0;
+            margin: .3em .5em;
+            color: var(--dark);
+            background-color: var(--secondary-color);
+
+            span {
+                float: left;
+                width: 30%;
+                text-align: center;
+            }
+
+            .number {
+                float: left;
+                width: 10%;
+                text-align: center;
+                align-content: center;
+            }
+
+            .members {
+                width: 30%;
+            }
+
+            .city {
+                font-weight: bold;
+            }
+
+            /* Clear floats after the columns */
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        }
+
+        .content-header {
+            font-weight: bold;
+            border: none;
+            color: white;
+            background-color: var(--mid);
+        }
+
+        .create-new {
+            margin: 1em 0;
+            display: flex;
+            justify-content: space-evenly;
+
+            button {
+                padding: .6em .8em;
+                border: none;
+                border-radius: .3em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--mid);
+                cursor: pointer;
+            }
+        }
+
+        .no-destinations {
+            padding: 5em 0;
+            text-align: center;
+        }
+    }
+}
+
+/* Single Group page */
+section.group-view {
+    padding: 2em 1.5em 1em 1.5em;
+
+    .container {
+        color: var(--darkest);
+        display: block;
+
+        .details {
+            color: var(--darkest);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .members {
+                margin: 1em;
+                text-align: center;
+                width: 100%;
+
+                .member {
+                    margin: .5em 0;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 2px dashed var(--darkest);
+                    border-radius: .3em;
+
+                    span {
+                        margin-left: .5em;
+                    }
+
+                    button {
+                        margin: .3em 0;
+                        margin-right: .5em;
+                        padding: .5em .7em;
+                        border: none;
+                        border-radius: .3em;
+                        font-weight: bold;
+                        color: white;
+                        background-color: var(--mid);
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+        }
+
+        .message {
+            text-align: center;
+            display: block;
+            padding: .3em .6em;
+            margin: .4em auto;
+            width: 17em;
+            border: 2px solid red;
+            border-radius: .2em;
+            font-size: .8em;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(194, 63, 63, 0.69);
+        }
+
+        .no-message {
+            display: none;
+        }
+
+    }
+}
+
+/* New Group page */
+section.group-new {
+    .container {
+        margin: 0;
+        padding: 1em;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            text-align: center;
+            color: var(--darkest);
+
+            h1 {
+                margin: 1em 0;
+            }
+
+            label {
+                display: block;
+            }
+
+            .name {
+                label {
+                    font-size: 1.2em;
+                    margin-bottom: .3em;
+                }
+
+                input {
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+
+            .members {
+                h2 {
+                    margin-top: 2em;
+                    margin-bottom: .3em;
+                }
+
+                .members-btns {
+                    width: 30px;
+                    height: 30px;
+                    border: none;
+                    border-radius: .3em;
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    color: white;
+                    background-color: var(--mid);
+                    cursor: pointer;
+                }
+
+                .member {
+                    margin: .5em 0;
+
+                    input {
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            }
+
+            button {
+                margin: 1em;
+                margin-top: 3em;
+                padding: 1em 1.2em;
+                border: none;
+                border-radius: .3em;
+                font-size: 1.2em;
+                font-weight: bold;
+                color: white;
+                background-color: var(--mid);
+                cursor: pointer;
+            }
+
+            .message {
+                display: inherit;
+                padding: .3em .6em;
+                margin: .4em 4.7em;
+                width: 17em;
+                border: 2px solid red;
+                border-radius: .2em;
+                font-size: .8em;
+                font-weight: bold;
+                color: white;
+                background-color: rgba(194, 63, 63, 0.69);
+            }
+
+            .no-message {
+                display: none;
+            }
+        }
+    }
+}
+
 @media only screen and (min-width: 600px) {
 
     /* Destinations page */
@@ -764,6 +1027,22 @@ section.votes {
 
                 }
             }
+        }
+    }
+
+    /* Single Group page */
+    section.group-view {
+
+        .container {
+
+            .details {
+                .members {
+                    width: 70%;
+
+                }
+
+            }
+
         }
     }
 }
@@ -1060,6 +1339,22 @@ section.votes {
 
                 }
             }
+        }
+    }
+
+    /* Single Group page */
+    section.group-view {
+
+        .container {
+
+            .details {
+                .members {
+                    width: 50%;
+
+                }
+
+            }
+
         }
     }
 }

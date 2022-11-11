@@ -58,7 +58,7 @@ const postDestinationsNew = async (req, res, next) => {
     const user_id = req.session.user_id;
     const user = await User.findByPk(user_id);
     if (!user) return res.redirect('/login');
-
+    
     Destination.create({
         description: req.body.description,
         country: req.body.country,
@@ -78,11 +78,22 @@ const postDestinationsNew = async (req, res, next) => {
 // GET /destinations/:id
 // Auth: User
 const getDestination = async (req, res, next) => {
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
+
     const destination = await Destination.findByPk(req.params.id, {
         include: [
             {
                 model: Group,
-                attributes: ['id', 'name', 'admin_user_id']
+                attributes: ['id', 'name', 'admin_user_id'],
+                include: {
+                    model: GroupMember,
+                    where: {
+                        email: user.email
+                    },
+                },
+                required: true
             }
         ]
     });

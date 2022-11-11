@@ -62,25 +62,34 @@ const postGroupsNew = async (req, res, next) => {
     }).then(group => {
         const group_member_emails = req.body.email;
         try {
-            group_member_emails.forEach(email => {
+            if (Array.isArray(group_member_emails)) {
+                group_member_emails.forEach(email => {
+                    GroupMember.create({
+                        email: email,
+                        group_id: group.id
+                    }).then(member => {
+                        console.log(`${member.email} added to group ${group.name}`);
+                    });
+                });
+            }
+            else { // Only Group Admin email provided
                 GroupMember.create({
-                    email: email,
+                    email: group_member_emails,
                     group_id: group.id
                 }).then(member => {
                     console.log(`${member.email} added to group ${group.name}`);
                 });
-            });
-            //res.json({ message: 'all good' });
+            }
             res.redirect(`/groups`);
         } catch (err) {
             console.log(err);
             //res.send(err);
-            res.render('group_new', { message: "Something went wrong. Please try again." });
+            res.render('group_new', { message: "Something went wrong. Please try again.", email: user.email });
         }
     }).catch(err => {
         console.log(err);
         //res.send(err);
-        res.render('group_new', { message: "Something went wrong. Please try again." });
+        res.render('group_new', { message: "Something went wrong. Please try again.", email: user.email });
     });
 };
 

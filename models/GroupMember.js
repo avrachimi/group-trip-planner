@@ -11,7 +11,13 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true, // Keep table name same as model name
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: 'updated_at'
+        updatedAt: 'updated_at',
+        indexes: [
+            {
+                unique: true,
+                fields: ['email', 'group_id']
+            }
+        ]
     });
 
     return GroupMember;

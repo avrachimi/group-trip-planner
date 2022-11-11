@@ -24,7 +24,7 @@
                     <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
-                        <form action="logout" method="post">
+                        <form action="/logout" method="post">
                             <button type="submit" name="logout" class="logout-btn">Logout</button>
                         </form>
                     </li>
@@ -45,8 +45,9 @@
                         <h3>Members</h3>
                         <% for (let i = 0; i < locals.group_members.length; i++) { %>
                             <div class="member">
+                                <span><b><%= i+1 %></b></span>
                                 <p>
-                                    <b><%= i+1 %></b><%= locals.group_members[i].email %>
+                                    <%= locals.group_members[i].email %>
                                 </p>
                                 <button onclick="deleteGroupMember()">Remove</button>
                             </div>

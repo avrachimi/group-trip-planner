@@ -24,7 +24,7 @@
                     <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
-                        <form action="logout" method="post">
+                        <form action="/logout" method="post">
                             <button type="submit" name="logout" class="logout-btn">Logout</button>
                         </form>
                     </li>
@@ -69,6 +69,7 @@
                 </div>
 
                 <div class="group">
+                    <label for="group">Group</label>
                     <select name="group" id="group-select" required>
                         <% if (locals.groups) { %> 
                             <option value="">Choose a group</option>

@@ -24,7 +24,7 @@
                     <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
-                        <form action="logout" method="post">
+                        <form action="/logout" method="post">
                             <button type="submit" name="logout" class="logout-btn">Logout</button>
                         </form>
                     </li>
@@ -38,7 +38,7 @@
                 <div class="content-header row">
                     <span class="number">#</span>
                     <span class="name">Name</span>
-                    <span class="admin">Admin</span>
+                    <span class="creator">Creator</span>
                     <span class="members">Members</span>
                 </div>
                 <div id="group-list" class="list">
@@ -52,7 +52,7 @@
                                 <span class="name">
                                     <%= locals.groups[i].group.name %>
                                 </span>
-                                <span class="admin">
+                                <span class="creator">
                                     <%= locals.groups[i].group.user.last_name %>
                                 </span>
                                 <span class="members">

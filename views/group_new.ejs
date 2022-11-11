@@ -24,7 +24,7 @@
                     <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
-                        <form action="logout" method="post">
+                        <form action="/logout" method="post">
                             <button type="submit" name="logout" class="logout-btn">Logout</button>
                         </form>
                     </li>
@@ -43,8 +43,8 @@
 
                 <div id="members" class="members">
                     <h2>Members</h2>
-                    <input type="button" onClick="addMember()" value="+">
-                    <input type="button" onClick="removeMember()" value="-">
+                    <input class="members-btns" type="button" onClick="addMember()" value="+">
+                    <input class="members-btns" type="button" onClick="removeMember()" value="-">
                     <div class="member">
                         <label for="email"><b>Member 1</b></label>
                         <input type="email" placeholder="Enter Member Email" name="email" value="<%= locals.email %>" readonly required>
