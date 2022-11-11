@@ -1,18 +1,55 @@
 const db = require('../models');
 const Destination = db['destination'];
+const Group = db['group'];
+const GroupMember = db['group_member'];
 const User = db['user'];
 
 // GET /destinations
 // Auth: User
 const getDestinations = async (req, res, next) => {
-    const destinations = await Destination.findAll();
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
+
+    const destinations = await Destination.findAll({
+        include: [
+            {
+                model: Group,
+                include: [
+                    {
+                        model: GroupMember,
+                        where: {
+                            email: user.email
+                        }
+                    }
+                ],
+                required: true
+            }
+        ]
+    });
+
+    //res.json({ destinations: destinations });
     res.render('destinations', { destinations: destinations });
 };
 
 // GET /destinations/new
 // Auth: User
-const getDestinationsNew = (req, res, next) => {
-    res.render('destination_new');
+const getDestinationsNew = async (req, res, next) => {
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
+
+    const groups = await Group.findAll({
+        include: {
+            model: GroupMember,
+            where: {
+                email: user.email
+            },
+            attributes: ['id', 'email']
+        },
+        attributes: ['id', 'name']
+    });
+    res.render('destination_new', {groups: groups});
 };
 
 // POST /destinations/new
@@ -28,7 +65,8 @@ const postDestinationsNew = async (req, res, next) => {
         city: req.body.city,
         budget: req.body.budget,
         nights_stay: req.body.nights_stay,
-        user_id: user.id
+        user_id: user.id,
+        group_id: req.body.group
     }).then(json => {
         res.redirect(`/destinations/${json.id}`);
     }).catch(err => {
@@ -40,18 +78,27 @@ const postDestinationsNew = async (req, res, next) => {
 // GET /destinations/:id
 // Auth: User
 const getDestination = async (req, res, next) => {
-    const destination = await Destination.findByPk(req.params.id);
+    const destination = await Destination.findByPk(req.params.id, {
+        include: [
+            {
+                model: Group,
+                attributes: ['id', 'name', 'admin_user_id']
+            }
+        ]
+    });
     if (!destination) return res.redirect('/destinations');
 
+    //res.json({ destination: destination, isOwner: req.session.user_id === destination.user_id });
     res.render('destination_view', { destination: destination, isOwner: req.session.user_id === destination.user_id });
 };
 
 // GET /destinations/:id/edit
 // Auth: User
 const getDestinationEdit = async (req, res, next) => {
-    const destination = await Destination.findByPk(req.params.id);
+    const destination = await Destination.findByPk(req.params.id, { include: Group });
     if (!destination) return res.redirect('/destinations');
 
+    //res.json({ destination: destination });
     res.render('destination_edit', { destination: destination });
 };
 
@@ -63,7 +110,8 @@ const updateDestination = async (req, res, next) => {
         country: req.body.country,
         city: req.body.city,
         budget: req.body.budget,
-        nights_stay: req.body.nights_stay
+        nights_stay: req.body.nights_stay,
+        group_id: req.body.group
     };
 
     Destination.update(body, {

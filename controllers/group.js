@@ -1,6 +1,7 @@
 const db = require('../models');
 const Group = db['group'];
 const GroupMember = db['group_member'];
+const Destination = db['destination'];
 const User = db['user'];
 
 // GET /groups
@@ -23,7 +24,7 @@ const getGroups = async (req, res, next) => {
                 include: [
                     {
                         model: User,
-                        attributes: ['id', 'email']
+                        attributes: ['id', 'email', 'last_name']
                     },
                     {
                         model: GroupMember,
@@ -33,15 +34,19 @@ const getGroups = async (req, res, next) => {
             }
         ]
     });
-    
+    console.log(group_members);
     //res.json({ groups: group_members, user_id: user.id });
     res.render('groups', { groups: group_members, user_id: user.id });
 };
 
 // GET /groups/new
 // Auth: User
-const getGroupsNew = (req, res, next) => {
-    res.render('group_new');
+const getGroupsNew = async (req, res, next) => {
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
+
+    res.render('group_new', { email: user.email });
 };
 
 // POST /groups/new
@@ -82,12 +87,39 @@ const postGroupsNew = async (req, res, next) => {
 // GET /groups/:id
 // Auth: User
 const getGroup = async (req, res, next) => {
-    const group = await Group.findByPk(req.params.id, { include: [GroupMember, User] });
-    if (!group || group.user.id !== req.session.user_id) return res.redirect('/groups');
+    const user_id = req.session.user_id;
+    const user = await User.findByPk(user_id);
+    if (!user) return res.redirect('/login');
 
+    //FIXME: needs work. only allow user on this page is they are a member of this group
+    const group = await Group.findByPk(req.params.id, { 
+        include: [
+            {
+                model: GroupMember,
+                where: {
+                    email: user.email
+                }
+            }, 
+            {
+                model: User,
+                attributes: ['id']
+            },
+            {
+                model: Destination
+            }
+        ] 
+    });
+    if (!group) return res.redirect('/groups');
 
-    //res.json({group: group});
-    res.render('group_view', { group: group });
+    const group_members = await GroupMember.findAll({
+        where: {
+            group_id: group.id
+        },
+        attributes: ['id', 'email']
+    });
+    
+    //res.json({group: group, group_members: group_members});
+    res.render('group_view', { group: group, group_members: group_members });
 };
 
 // PUT /groups/:id/edit-name

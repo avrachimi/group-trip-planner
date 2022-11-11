@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li class="current"><a href="/groups">Groups</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <section class="groups">
+        <div class="container">
+            <% if (locals.groups.length > 0) { %> 
+                <div class="content-header row">
+                    <span class="number">#</span>
+                    <span class="name">Name</span>
+                    <span class="admin">Admin</span>
+                    <span class="members">Members</span>
+                </div>
+                <div id="group-list" class="list">
+                    <% if (locals.groups) { %>
+                        <% for (let i=0; i < locals.groups.length; i++) { %>
+                            <div id="<%= locals.groups[i].group.id %>" class="list-item row"
+                                onclick="viewGroup(this.id)">
+                                <span class="number">
+                                    <%= i + 1 %>
+                                </span>
+                                <span class="name">
+                                    <%= locals.groups[i].group.name %>
+                                </span>
+                                <span class="admin">
+                                    <%= locals.groups[i].group.user.last_name %>
+                                </span>
+                                <span class="members">
+                                    <%= locals.groups[i].group.group_members.length %>
+                                </span>
+                            </div>
+                            </a>
+                            <% } %>
+                                <% } %>
+                </div>
+            <% } else { %>
+                <h2 class="no-groups">You are not part of any groups yet.</h2>
+            <% } %> 
+            <div class="create-new">
+                <button onclick="createGroup()">Create New</button>
+            </div>
+        </div>
+    </section>
+    <script>
+        function viewGroup(id) {
+            window.location.href = `/groups/${id}`;
+        }
+
+        function createGroup() {
+            window.location.href = `/groups/new`;
+        }
+    </script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

@@ -17,6 +17,8 @@ function initialize() {
     db['group'].hasMany(db['group_member'], { foreignKey: 'group_id', onDelete: 'CASCADE' });
     db['group_member'].belongsTo(db['group'], { foreignKey: 'group_id' });
 
+    db['group'].hasMany(db['destination'], { foreignKey: 'group_id', onDelete: 'CASCADE'});
+    db['destination'].belongsTo(db['group'], { foreignKey: 'group_id'});
 }
 
 function sync(force = false) {

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Group</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/groups">Groups</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <section class="group-new">
+        <div class="container">
+            <form id="newGroupForm" action="/groups/new" method="post">
+                <h1>Create New Group</h1>
+                <div class="name">
+                    <label for="name"><b>Name</b></label>
+                    <input type="text" placeholder="Enter Group Name" name="name" required>
+                </div>
+
+                <div id="members" class="members">
+                    <h2>Members</h2>
+                    <input type="button" onClick="addMember()" value="+">
+                    <input type="button" onClick="removeMember()" value="-">
+                    <div class="member">
+                        <label for="email"><b>Member 1</b></label>
+                        <input type="email" placeholder="Enter Member Email" name="email" value="<%= locals.email %>" readonly required>
+                    </div>
+                </div>
+
+                <div>
+                    <% if (locals.message) { %>
+                        <span class="message">
+                            <%= locals.message %>
+                        </span>
+                    <% } %>
+                </div>
+
+                <button type="submit">Create Group</button>
+            </form>
+        </div>
+    </section>
+    <script>
+        function addMember() {
+            let membersElem = document.getElementById('members');
+            
+            let newMemberElem = document.createElement('div');
+            newMemberElem.classList = 'member';
+            
+            let label = document.createElement('label');
+            label.htmlFor = 'email';
+            label.innerHTML = `<b>Member ${membersElem.children.length-2}</b>`
+
+            let input = document.createElement('input');
+            input.type = 'email';
+            input.placeholder = 'Enter Member Email';
+            input.name = 'email';
+            input.required = true;
+            newMemberElem.appendChild(label);
+            newMemberElem.appendChild(input);
+
+            membersElem.appendChild(newMemberElem); 
+        }
+
+        function removeMember() {
+            let membersElem = document.getElementById('members');
+
+            if (membersElem.children.length > 4) {
+                membersElem.removeChild(membersElem.lastChild);
+            }
+        }
+    </script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

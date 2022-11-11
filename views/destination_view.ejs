@@ -20,6 +20,7 @@
                 <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
                 <ul>
                     <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/groups">Groups</a></li>
                     <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
@@ -30,6 +31,7 @@
                 </ul>
             </nav>
         </div>
+    </div>
         <section class="destination-view">
             <div class="container">
                 <div class="details">
@@ -64,6 +66,12 @@
                             <h3>Votes</h3>
                             <span>
                                 <%= locals.destination.vote_count %>
+                            </span>
+                        </div>
+                        <div class="group-name">
+                            <h3>Group</h3>
+                            <span>
+                                <%= locals.destination.group.name %>
                             </span>
                         </div>
                     </div>
@@ -103,7 +111,6 @@
                     <% } %>
             </div>
         </section>
-    </div>
     <script src="/js/nav.js"></script>
     <script>
 

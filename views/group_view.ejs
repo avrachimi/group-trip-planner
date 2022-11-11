@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <a class="logo" href="/">GroupTrip<span>Planner</span></a>
+            <img id="mobile-open-menu" class="mobile-open-menu" src="/images/menu.svg" alt="Open Navigation">
+
+            <nav>
+                <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
+                <ul>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/groups">Groups</a></li>
+                    <li><a href="/votes">Votes</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li>
+                        <form action="logout" method="post">
+                            <button type="submit" name="logout" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+        <section class="group-view">
+            <div class="container">
+                <div class="details">
+                    <div class="name">
+                        <h1>
+                            <%= locals.group.name %>
+                        </h1>
+                    </div>
+
+                    <div class="members">
+                        <h3>Members</h3>
+                        <% for (let i = 0; i < locals.group_members.length; i++) { %>
+                            <div class="member">
+                                <p>
+                                    <b><%= i+1 %></b><%= locals.group_members[i].email %>
+                                </p>
+                                <button onclick="deleteGroupMember()">Remove</button>
+                            </div>
+                        <% } %> 
+                    </div>
+
+                </div>
+                <div>
+                    <% if (locals.message) { %>
+                        <span class="message">
+                            <%= locals.message %>
+                        </span>
+                        <% } %>
+                </div>
+            </div>
+        </section>
+    <script src="/js/nav.js"></script>
+    <script>
+
+        function deleteGroup(id) {
+            const message = document.getElementById('message');
+
+            fetch('/groups/' + id, {
+                method: 'DELETE'
+            }).then(res => res.json()
+            ).then(json => {
+                if (json.isDeleted) {
+                    window.location.href = `/destinations`;
+                }
+                else {
+                    message.classList.add('no-message');
+                    message.innerHTML = 'Could not delete destination. Please try again.';
+                }
+            });
+        }
+
+        function deleteGroupMember() {
+            // TODO: later
+        }
+    </script>
+</body>
+
+</html>
