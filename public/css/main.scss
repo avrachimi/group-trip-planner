@@ -181,6 +181,27 @@ section.register {
                 display: none;
             }
         }
+
+        .demo {
+            margin-top: 2em;
+            padding-top: 2em;
+            border-top: 2px solid rgba(128, 128, 128, 0.398);
+            
+            input {
+                display: none;
+            }
+
+            button {
+                margin: .5em 0;
+                padding: 1em 5em;
+                border: 1px solid green;
+                border-radius: 0.3em;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                background-color: green;
+            }
+        }
     }
 }
 
