@@ -34,8 +34,7 @@ const getGroups = async (req, res, next) => {
             }
         ]
     });
-    console.log(group_members);
-    //res.json({ groups: group_members, user_id: user.id });
+
     res.render('groups', { groups: group_members, user_id: user.id });
 };
 
@@ -83,12 +82,10 @@ const postGroupsNew = async (req, res, next) => {
             res.redirect(`/groups`);
         } catch (err) {
             console.log(err);
-            //res.send(err);
             res.render('group_new', { message: "Something went wrong. Please try again.", email: user.email });
         }
     }).catch(err => {
         console.log(err);
-        //res.send(err);
         res.render('group_new', { message: "Something went wrong. Please try again.", email: user.email });
     });
 };
@@ -100,7 +97,6 @@ const getGroup = async (req, res, next) => {
     const user = await User.findByPk(user_id);
     if (!user) return res.redirect('/login');
 
-    //FIXME: needs work. only allow user on this page is they are a member of this group
     const group = await Group.findByPk(req.params.id, { 
         include: [
             {
@@ -111,7 +107,7 @@ const getGroup = async (req, res, next) => {
             }, 
             {
                 model: User,
-                attributes: ['id']
+                attributes: ['id', 'email']
             },
             {
                 model: Destination
@@ -127,8 +123,7 @@ const getGroup = async (req, res, next) => {
         attributes: ['id', 'email']
     });
     
-    //res.json({group: group, group_members: group_members});
-    res.render('group_view', { group: group, group_members: group_members });
+    res.render('group_view', { group: group, group_members: group_members, isOwner: user.id === group.user.id });
 };
 
 // PUT /groups/:id/edit-name

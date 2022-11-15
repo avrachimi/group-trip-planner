@@ -104,11 +104,11 @@
                         <form action="/destinations/<%= locals.destination.id %>/edit" method="get">
                             <button class="edit" type="submit">Edit Destination</button>
                         </form>
-                        <button id="<%= locals.destination.id %>" class="delete" type="submit"
+                        <button id="<%= locals.destination.id %>" class="delete"
                             onclick="deleteDestination(this.id)">Delete Destination</button>
                     </div>
                     <span id="message" class="message no-message"></span>
-                    <% } %>
+                <% } %>
             </div>
         </section>
     <script src="/js/nav.js"></script>

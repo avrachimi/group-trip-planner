@@ -70,7 +70,7 @@
                     <form action="/account/edit/password" method="get">
                         <button class="edit" type="submit">Change Password</button>
                     </form>
-                    <button class="delete" onclick="deleteAccount()" disabled>Delete Account</button>
+                    <button class="delete" onclick="deleteAccount()">Delete Account</button>
                 </div>
                 <span id="message" class="message no-message"></span>
             </div>
@@ -82,18 +82,21 @@
         function deleteAccount() {
             const message = document.getElementById('message');
 
-            fetch('/account', {
-                method: 'DELETE'
-            }).then(res => res.json()
-            ).then(json => {
-                if (json.isDeleted) {
-                    window.location.href = `/login`;
-                }
-                else {
-                    message.classList.add('no-message');
-                    message.innerHTML = 'Could not delete account. Please try again.';
-                }
-            });
+            let result = confirm('Are you sure you want to delete your account?');
+            if (result) {
+                fetch('/account', {
+                    method: 'DELETE'
+                }).then(res => res.json()
+                ).then(json => {
+                    if (json.isDeleted) {
+                        window.location.href = `/login`;
+                    }
+                    else {
+                        message.classList.add('no-message');
+                        message.innerHTML = 'Could not delete account. Please try again.';
+                    }
+                });
+            }
         }
     </script>
 </body>

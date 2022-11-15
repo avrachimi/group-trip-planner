@@ -6,6 +6,7 @@
   --mid: #00719c;
   --dark: #00415a;
   --darkest: #001f2b;
+  --mid-disabled: #00709c8d;
 }
 
 * {
@@ -291,7 +292,7 @@ section.destination-view .container .vote-row {
 }
 section.destination-view .container .vote-row .vote {
   width: 13em;
-  margin: 0.4em 0;
+  margin-top: 4em;
   padding: 0.5em 0;
   border: none;
   border-radius: 1em;
@@ -728,6 +729,7 @@ section.group-view .container .details h1 {
 }
 section.group-view .container .details .members {
   margin: 1em;
+  margin-top: 3em;
   text-align: center;
   width: 100%;
 }
@@ -738,6 +740,9 @@ section.group-view .container .details .members .member {
   align-items: center;
   border: 2px dashed var(--darkest);
   border-radius: 0.3em;
+}
+section.group-view .container .details .members .member p {
+  padding: 0.8em 1em;
 }
 section.group-view .container .details .members .member span {
   margin-left: 0.5em;
@@ -752,6 +757,26 @@ section.group-view .container .details .members .member button {
   color: white;
   background-color: var(--mid);
   cursor: pointer;
+}
+section.group-view .container .details .members .member button:disabled {
+  background-color: var(--mid-disabled);
+  cursor: not-allowed;
+}
+section.group-view .container .details .delete-group button {
+  margin: 2em 0;
+  margin-right: 0.5em;
+  padding: 1em 1em;
+  border: none;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--mid);
+  cursor: pointer;
+}
+section.group-view .container .details .delete-group button:disabled {
+  background-color: var(--mid-disabled);
+  cursor: not-allowed;
 }
 section.group-view .container .message {
   text-align: center;
@@ -785,17 +810,25 @@ section.group-new .container form {
 }
 section.group-new .container form h1 {
   margin: 1em 0;
+  font-size: 2em;
 }
 section.group-new .container form label {
   display: block;
+}
+section.group-new .container form .name {
+  width: 15em;
 }
 section.group-new .container form .name label {
   font-size: 1.2em;
   margin-bottom: 0.3em;
 }
 section.group-new .container form .name input {
+  padding: 0.3em 0;
   text-align: center;
-  width: 100%;
+  width: 90%;
+}
+section.group-new .container form .members {
+  width: 15em;
 }
 section.group-new .container form .members h2 {
   margin-top: 2em;
@@ -806,6 +839,7 @@ section.group-new .container form .members .members-btns {
   height: 30px;
   border: none;
   border-radius: 0.3em;
+  text-align: center;
   font-size: 1.5em;
   font-weight: bold;
   color: white;
@@ -816,8 +850,9 @@ section.group-new .container form .members .member {
   margin: 0.5em 0;
 }
 section.group-new .container form .members .member input {
+  padding: 0.3em 0;
   text-align: center;
-  width: 100%;
+  width: 90%;
 }
 section.group-new .container form button {
   margin: 1em;
@@ -877,6 +912,20 @@ section.destination-edit .container form .short-data {
   /* Single Group page */
   section.group-view .container .details .members {
     width: 70%;
+  }
+  /* Votes page */
+  section.votes .container {
+    margin-top: 1em;
+  }
+  section.votes .container .row {
+    margin: 0.45em 1.3em;
+  }
+  /* Groups page */
+  section.groups .container {
+    margin-top: 1em;
+  }
+  section.groups .container .row {
+    margin: 0.45em 1.3em;
   }
 }
 @media only screen and (min-width: 750px) {
@@ -1072,6 +1121,14 @@ section.destination-edit .container form button {
   /* Edit Account page */
   section.account-edit .container form .details {
     width: 40vw;
+  }
+  /* Votes page */
+  section.votes .container {
+    margin: 1em 2em;
+  }
+  /* Groups page */
+  section.groups .container {
+    margin: 1em 2em;
   }
   /* Single Group page */
   section.group-view .container .details .members {
