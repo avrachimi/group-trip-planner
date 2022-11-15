@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destinations</title>
+    <title>Groups</title>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
@@ -20,8 +20,8 @@
                 <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
                 <ul>
                     <li><a href="/destinations">Destinations</a></li>
-                    <li><a href="/groups">Groups</a></li>
-                    <li class="current"><a href="/votes">Votes</a></li>
+                    <li class="current"><a href="/groups">Groups</a></li>
+                    <li><a href="/votes">Votes</a></li>
                     <li><a href="/account">Account</a></li>
                     <li>
                         <form action="/logout" method="post">
@@ -32,35 +32,31 @@
             </nav>
         </div>
     </div>
-    <section class="votes">
+    <section class="groups">
         <div class="container">
-            <% if (locals.votes.length > 0) { %> 
+            <% if (locals.groups.length > 0) { %> 
                 <div class="content-header row">
                     <span class="number">#</span>
-                    <span class="destination">Destination</span>
-                    <span class="voted-on">Voted On</span>
-                    <span class="going">Going</span>
+                    <span class="name">Name</span>
+                    <span class="creator">Creator</span>
+                    <span class="members">Members</span>
                 </div>
-                <div id="vote-list" class="list">
-                    <% if (locals.votes) { %>
-                        <% for (let i=0; i < locals.votes.length; i++) { %>
-                            <div id="<%= locals.votes[i].destination.id %>" class="list-item row"
-                                onclick="viewDestination(this.id)">
+                <div id="group-list" class="list">
+                    <% if (locals.groups) { %>
+                        <% for (let i=0; i < locals.groups.length; i++) { %>
+                            <div id="<%= locals.groups[i].group.id %>" class="list-item row"
+                                onclick="viewGroup(this.id)">
                                 <span class="number">
                                     <%= i + 1 %>
                                 </span>
-                                <span class="destination">
-                                    <%= locals.votes[i].destination.name %>
+                                <span class="name">
+                                    <%= locals.groups[i].group.name %>
                                 </span>
-                                <span class="voted-on">
-                                    <%= new Date(locals.votes[i].updated_at).toDateString() %>
+                                <span class="creator">
+                                    <%= locals.groups[i].group.user.last_name %>
                                 </span>
-                                <span class="going">
-                                    <% if (locals.votes[i].choice) { %>
-                                        Yes
-                                    <% } else { %> 
-                                        No
-                                    <% } %> 
+                                <span class="members">
+                                    <%= locals.groups[i].group.group_members.length %>
                                 </span>
                             </div>
                             </a>
@@ -68,11 +64,23 @@
                                 <% } %>
                 </div>
             <% } else { %>
-                <h2 class="no-votes">You haven't casted any votes yet.</h2>
+                <h2 class="no-groups">You are not part of any groups yet.</h2>
             <% } %> 
+            <div class="create-new">
+                <button onclick="createGroup()">Create New</button>
+            </div>
         </div>
     </section>
-    <script src="/js/destinations.js"></script>
+    <script>
+        function viewGroup(id) {
+            window.location.href = `/groups/${id}`;
+        }
+
+        function createGroup() {
+            window.location.href = `/groups/new`;
+        }
+    </script>
     <script src="/js/nav.js"></script>
 </body>
+
 </html>

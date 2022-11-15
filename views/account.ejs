@@ -20,10 +20,11 @@
                 <img id="mobile-exit-menu" class="mobile-exit-menu" src="/images/exit.svg" alt="Close Navigation">
                 <ul>
                     <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/groups">Groups</a></li>
                     <li><a href="/votes">Votes</a></li>
                     <li class="current"><a href="/account">Account</a></li>
                     <li>
-                        <form action="logout" method="post">
+                        <form action="/logout" method="post">
                             <button type="submit" name="logout" class="logout-btn">Logout</button>
                         </form>
                     </li>
@@ -69,7 +70,7 @@
                     <form action="/account/edit/password" method="get">
                         <button class="edit" type="submit">Change Password</button>
                     </form>
-                    <button class="delete" onclick="deleteAccount()" disabled>Delete Account</button>
+                    <button class="delete" onclick="deleteAccount()">Delete Account</button>
                 </div>
                 <span id="message" class="message no-message"></span>
             </div>
@@ -81,18 +82,21 @@
         function deleteAccount() {
             const message = document.getElementById('message');
 
-            fetch('/account', {
-                method: 'DELETE'
-            }).then(res => res.json()
-            ).then(json => {
-                if (json.isDeleted) {
-                    window.location.href = `/login`;
-                }
-                else {
-                    message.classList.add('no-message');
-                    message.innerHTML = 'Could not delete account. Please try again.';
-                }
-            });
+            let result = confirm('Are you sure you want to delete your account?');
+            if (result) {
+                fetch('/account', {
+                    method: 'DELETE'
+                }).then(res => res.json()
+                ).then(json => {
+                    if (json.isDeleted) {
+                        window.location.href = `/login`;
+                    }
+                    else {
+                        message.classList.add('no-message');
+                        message.innerHTML = 'Could not delete account. Please try again.';
+                    }
+                });
+            }
         }
     </script>
 </body>

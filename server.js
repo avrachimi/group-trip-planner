@@ -1,19 +1,21 @@
-require('dotenv').config()
+require('dotenv').config();
+
 const express = require('express');
+const methodOverride = require("method-override");
+const cors = require('cors');
+
 const path = require('path');
 const db_helper = require('./helpers/database');
 const db = require('./models');
-const methodOverride = require("method-override");
+
 const userRoutes = require('./routes/user');
 const destinationRoutes = require('./routes/destination');
 const voteRoutes = require('./routes/vote');
-const cors = require('cors');
+const groupRoutes = require('./routes/group');
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const SessionStore = require('express-session-sequelize')(session.Store);
-
-require('dotenv').config()
 
 const app = express();
 
@@ -28,6 +30,18 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Setup Views and Public directories
+app.set('views', path.join(__dirname + '/views'));
+app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname + '/public')));
+
+app.use(methodOverride('_method'));
+
+// Sync database with models
+db_helper.initialize();
+db_helper.sync();
+
 // Session stuff
 const store = new SessionStore({
     db: db.sequelize
@@ -41,22 +55,10 @@ app.use(session({
     store: store
 }));
 
-// Setup Views and Public directories
-app.set('views', path.join(__dirname + '/views'));
-app.set('view engine', 'ejs');
-
-app.use(express.static(path.join(__dirname + '/public')));
-
-app.use(methodOverride('_method'));
-
-
 // Routes
 app.use('/', userRoutes);
 app.use('/', destinationRoutes);
 app.use('/', voteRoutes);
-
-// Sync database with models
-db_helper.initialize();
-db_helper.sync();
+app.use('/', groupRoutes);
 
 app.listen(port, () => console.log(`Server running on PORT ${port}`));
