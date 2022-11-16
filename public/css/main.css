@@ -783,6 +783,28 @@ section.group-view .container .details .members .member button:disabled {
   background-color: var(--mid-disabled);
   cursor: not-allowed;
 }
+section.group-view .container .details #newGroupMemberForm {
+  margin: 1em 0;
+  padding: 1em;
+  text-align: center;
+  border: 2px dashed var(--darkest);
+  border-radius: 0.5em;
+}
+section.group-view .container .details #newGroupMemberForm .new-member input {
+  padding: 0.3em 0;
+  text-align: center;
+}
+section.group-view .container .details #newGroupMemberForm .new-member button {
+  margin: 0.3em 0;
+  margin-right: 0.5em;
+  padding: 0.5em 0.7em;
+  border: none;
+  border-radius: 0.3em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--mid);
+  cursor: pointer;
+}
 section.group-view .container .details .delete-group button {
   margin: 2em 0;
   margin-right: 0.5em;

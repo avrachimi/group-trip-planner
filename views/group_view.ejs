@@ -62,9 +62,16 @@
                         <% } %> 
                     </div>
                     <% if (locals.isOwner) { %>
-                        <div class="delete-group">
-                            <button onclick="deleteGroup('<%= locals.group.id %>')">Delete Group</button>
+                    <form id="newGroupMemberForm" action="/groups/<%= locals.group.id %>/add-member" method="post">
+                        <h3>Add Group Member</h3>
+                        <div id="new-member" class="new-member">
+                            <input type="email" placeholder="Enter Member Email" name="email" required>
+                            <button type="submit">Add Member</button>
                         </div>
+                    </form>
+                    <div class="delete-group">
+                        <button onclick="deleteGroup('<%= locals.group.id %>')">Delete Group</button>
+                    </div>
                     <% } %>
 
                 </div>

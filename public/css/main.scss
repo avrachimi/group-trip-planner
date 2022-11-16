@@ -187,7 +187,7 @@ section.register {
             margin-top: 2em;
             padding-top: 2em;
             border-top: 2px solid rgba(128, 128, 128, 0.398);
-            
+
             input {
                 display: none;
             }
@@ -889,6 +889,36 @@ section.group-view {
 
             }
 
+            #newGroupMemberForm {
+                margin: 1em 0;
+                padding: 1em;
+                text-align: center;
+                border: 2px dashed var(--darkest);
+                border-radius: .5em;
+
+                h3 {}
+
+                .new-member {
+
+                    input {
+                        padding: .3em 0;
+                        text-align: center;
+                    }
+
+                    button {
+                        margin: .3em 0;
+                        margin-right: .5em;
+                        padding: .5em .7em;
+                        border: none;
+                        border-radius: .3em;
+                        font-weight: bold;
+                        color: white;
+                        background-color: var(--mid);
+                        cursor: pointer;
+                    }
+                }
+            }
+
             .delete-group {
                 button {
                     margin: 2em 0;
@@ -957,6 +987,7 @@ section.group-new {
 
             .name {
                 width: 15em;
+
                 label {
                     font-size: 1.2em;
                     margin-bottom: .3em;
@@ -968,14 +999,15 @@ section.group-new {
                     width: 90%;
                 }
             }
-            
+
             .members {
                 width: 15em;
+
                 h2 {
                     margin-top: 2em;
                     margin-bottom: .3em;
                 }
-                
+
                 .members-btns {
                     width: 30px;
                     height: 30px;
@@ -988,10 +1020,10 @@ section.group-new {
                     background-color: var(--mid);
                     cursor: pointer;
                 }
-                
+
                 .member {
                     margin: .5em 0;
-                    
+
                     input {
                         padding: .3em 0;
                         text-align: center;
@@ -1424,7 +1456,7 @@ section.group-new {
             margin: 1em 2em;
         }
     }
-    
+
     /* Groups page */
     section.groups {
         .container {
