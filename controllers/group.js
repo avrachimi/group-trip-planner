@@ -152,6 +152,7 @@ const updateGroupName = async (req, res, next) => {
 // Auth: User
 const postGroupMember = async (req, res, next) => {
     const group = await Group.findByPk(req.params.id);
+    if (!group) return res.redirect('/groups');
     if (group.admin_user_id !== req.session.user_id) return redirect(`/groups/${group.id}`);
 
     const member = await GroupMember.findOne({
@@ -160,7 +161,7 @@ const postGroupMember = async (req, res, next) => {
             group_id: req.params.id
         }
     });
-    if (member) return res.render('group_view', {message: `Group member with email ${req.body.email} already exists in this group.`});
+    if (member) return res.redirect(`/groups/${req.params.id}`); // TODO: Add error message
 
     GroupMember.create({
         email: req.body.email,
