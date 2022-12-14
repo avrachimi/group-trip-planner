@@ -1,6 +1,6 @@
 const db = require('../models');
 
-function initialize() {
+async function initialize() {
     // Setup relationships
     db['user'].hasMany(db['destination'], { foreignKey: 'user_id'});
     db['destination'].belongsTo(db['user'], { foreignKey: 'user_id'});

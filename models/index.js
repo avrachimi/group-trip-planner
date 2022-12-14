@@ -5,23 +5,27 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-//const process = require('process');
 const basename = path.basename(__filename);
-//const env = process.env.NODE_ENV || 'development';
-//const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+const mysql = require('mysql2/promise');
+
+// Create db if it doesn't already exist
+const host = process.env.DB_HOST, 
+      port = process.env.DB_PORT, 
+      user = process.env.DB_USERNAME, 
+      password = process.env.DB_PASSWORD, 
+      database = process.env.DB_NAME,
+      dialect = process.env.DB_DIALECT;
+
+mysql.createConnection({ host, port, user, password }).then(connection => {
+  connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`).then(() => console.log('Created database ' + database));
+
+});
 
 let sequelize;
-/*
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-*/
-sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT
+sequelize = new Sequelize(database, user, password, {
+    host: host,
+    dialect: dialect
 });
 
 fs

@@ -39,8 +39,8 @@ app.use(express.static(path.join(__dirname + '/public')));
 app.use(methodOverride('_method'));
 
 // Sync database with models
-db_helper.initialize();
-db_helper.sync();
+db_helper.initialize().then(() => db_helper.sync());
+
 
 // Session stuff
 const store = new SessionStore({
